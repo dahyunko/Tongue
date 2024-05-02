@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
                 return new CustomUserDetails(user);
             }
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("로그인 실패");
         }
 
 

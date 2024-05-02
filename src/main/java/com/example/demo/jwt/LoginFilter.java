@@ -1,14 +1,16 @@
 package com.example.demo.jwt;
 
 import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.naming.AuthenticationException;
+import java.io.IOException;
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
@@ -41,8 +43,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     //로그인 실패시 실행하는 메소드
-   /* @Override
-    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) {
-
-    }*/
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
+                                              AuthenticationException failed){
+        System.out.println("fail");
+    }
 }

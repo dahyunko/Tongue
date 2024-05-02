@@ -37,8 +37,8 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         //csrf disable
-        http
-                .csrf(AbstractHttpConfigurer::disable);
+//        http
+//                .csrf(AbstractHttpConfigurer::disable);
 
         //form 로그인 방식 disable
         http
@@ -50,13 +50,23 @@ public class SecurityConfig {
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth)-> {
             auth
-                    .requestMatchers("/user/join", "/login", "/user/hi", "/", "/travel").permitAll()
+                    .requestMatchers("/user/join", "/login", "/user", "/", "/travel").permitAll()
                     .requestMatchers("/admin").hasRole("ADMIN")
                     .anyRequest().authenticated();
         });
 
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
+
+        http
+                .sessionManagement((auth) -> auth
+                    .maximumSessions(1)
+                    .maxSessionsPreventsLogin(true));
+
+        // 로그인 시 동일한 세션에 대한 id 변경
+        http
+                .sessionManagement((auth)-> auth
+                        .sessionFixation().changeSessionId());
 
         // 세션 STATELESS 설정, JWT를 통한 인증/ 인가를 위해
         http.sessionManagement((session)->session
