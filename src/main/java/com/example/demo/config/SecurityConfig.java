@@ -1,8 +1,11 @@
 package com.example.demo.config;
 
+import com.example.demo.jwt.JWTUtil;
 import com.example.demo.jwt.LoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
+import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,8 +22,22 @@ public class SecurityConfig {
     //AuthenticationManager가 인자로 받을 AuthenticationConfiguraion 객체 생성자 주입
     private final AuthenticationConfiguration authenticationConfiguration;
 
-    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration) {
+    //JWTUtil 주입
+    private final JWTUtil jwtUtil;
+
+    public SecurityConfig(AuthenticationConfiguration authenticationConfiguration, JWTUtil jwtUtil) {
         this.authenticationConfiguration = authenticationConfiguration;
+        this.jwtUtil = jwtUtil;
+    }
+
+    // 계층 권한 메소드 등록
+    @Bean
+    public RoleHierarchy roleHierarchy(){
+        RoleHierarchyImpl hierarchy = new RoleHierarchyImpl();
+
+        hierarchy.setHierarchy("ADMIN > USER");
+
+        return hierarchy;
     }
 
     //AuthenticationManager Bean 등록
@@ -36,28 +53,29 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-        //csrf disable
-//        http
-//                .csrf(AbstractHttpConfigurer::disable);
+        //csrf disable, rest api 사용할 경우 csrf 필요 없음
+        http
+                .csrf(AbstractHttpConfigurer::disable);
 
         //form 로그인 방식 disable
-        http
-                .formLogin(AbstractHttpConfigurer::disable);
+        http.formLogin(AbstractHttpConfigurer::disable);
 
         //http basic 인증 방식 disable
         http.httpBasic(AbstractHttpConfigurer::disable);
 
         // 경로별 인가 작업
-        http.authorizeHttpRequests((auth)-> {
-            auth
-                    .requestMatchers("/user/join", "/login", "/user", "/", "/travel").permitAll()
-                    .requestMatchers("/admin").hasRole("ADMIN")
-                    .anyRequest().authenticated();
-        });
+        http.authorizeHttpRequests((auth)-> auth
+                    .requestMatchers("/user/join", "/login", "/user", "/").permitAll()
+                    .requestMatchers("/travel/list").hasRole("ADMIN")
+                    .requestMatchers("/my/**").hasAnyRole("USER")
+                    .anyRequest().authenticated()
+        );
 
+        //AuthenticationManager()와 JWTUtil 인수 전달
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
+        // 다중 로그인 설정
         http
                 .sessionManagement((auth) -> auth
                     .maximumSessions(1)
