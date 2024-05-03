@@ -34,8 +34,9 @@ public class TravelController {
     }
 
     @GetMapping("/view/{travelId}")
-    public ResponseEntity<?> view(@PathVariable("travelId") String travelId, @RequestParam("userId") String userId) throws Exception{
+    public ResponseEntity<?> view(@PathVariable("travelId") String travelId) throws Exception{
         try{
+            String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
             TravelDto travelDto = travelService.viewTravel(travelId, userId);
             return new ResponseEntity<TravelDto>(travelDto, HttpStatus.OK);
         }catch (Exception e){
