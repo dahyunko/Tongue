@@ -1,7 +1,10 @@
 package com.example.demo.config;
 
+import com.example.demo.jwt.JWTFilter;
 import com.example.demo.jwt.JWTUtil;
 import com.example.demo.jwt.LoginFilter;
+import com.example.demo.model.users.UserRole;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -15,6 +18,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
@@ -65,30 +72,53 @@ public class SecurityConfig {
 
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth)-> auth
-                    .requestMatchers("/user/join", "/login", "/user", "/").permitAll()
-                    .requestMatchers("/travel/list").hasRole("ADMIN")
-                    .requestMatchers("/my/**").hasAnyRole("USER")
+                    .requestMatchers("/user/**", "/login", "/").permitAll()
+                    .requestMatchers("/travel/**" , "/user/**").hasAuthority(String.valueOf(UserRole.USER))
+                    .requestMatchers("/travel/**").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
                     .anyRequest().authenticated()
         );
+
+        // JWTFilter 등록
+        http.addFilterBefore(new JWTFilter(jwtUtil), LoginFilter.class);
 
         //AuthenticationManager()와 JWTUtil 인수 전달
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
-        // 다중 로그인 설정
-        http
-                .sessionManagement((auth) -> auth
-                    .maximumSessions(1)
-                    .maxSessionsPreventsLogin(true));
-
-        // 로그인 시 동일한 세션에 대한 id 변경
-        http
-                .sessionManagement((auth)-> auth
-                        .sessionFixation().changeSessionId());
+//        // 다중 로그인 설정
+//        http
+//                .sessionManagement((auth) -> auth
+//                    .maximumSessions(1)
+//                    .maxSessionsPreventsLogin(true));
+//
+//        // 로그인 시 동일한 세션에 대한 id 변경
+//        http
+//                .sessionManagement((auth)-> auth
+//                        .sessionFixation().changeSessionId());
 
         // 세션 STATELESS 설정, JWT를 통한 인증/ 인가를 위해
         http.sessionManagement((session)->session
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+        http
+                .cors((corsCustomizer -> corsCustomizer.configurationSource(new CorsConfigurationSource() {
+
+                    @Override
+                    public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+
+                        CorsConfiguration configuration = new CorsConfiguration();
+
+                        configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+                        configuration.setAllowedMethods(Collections.singletonList("*"));
+                        configuration.setAllowCredentials(true);
+                        configuration.setAllowedHeaders(Collections.singletonList("*"));
+                        configuration.setMaxAge(3600L);
+
+                        configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+                        return configuration;
+                    }
+                })));
 
         return http.build();
     }

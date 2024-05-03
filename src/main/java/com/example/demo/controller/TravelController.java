@@ -6,6 +6,7 @@ import com.example.demo.service.TravelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -22,8 +23,9 @@ public class TravelController {
     }
 
     @PostMapping("/regist")
-    public ResponseEntity<?> regist(@RequestBody List<TmapTravelDto> tmapTravelDtos, @RequestParam("travelName") String travelName, @RequestParam("userId") String userId) throws Exception{
+    public ResponseEntity<?> regist(@RequestBody List<TmapTravelDto> tmapTravelDtos, @RequestParam("travelName") String travelName) throws Exception{
         try{
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
             travelService.registTravel(tmapTravelDtos, travelName, userId);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }catch (Exception e){

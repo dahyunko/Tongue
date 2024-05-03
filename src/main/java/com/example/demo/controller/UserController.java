@@ -21,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/hi")
     public ResponseEntity<?> mainP(){
 
         String id = SecurityContextHolder.getContext().getAuthentication().getName();
