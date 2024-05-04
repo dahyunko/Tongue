@@ -39,8 +39,8 @@ jobs:
     - name: Login to DockerHub
       uses: docker/login-action@v1
       with:
-        username: $dahyunlucy
-        password: ${{ secrets.dahyunlucy }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
 
     - name: Build and push
       id: docker_build
@@ -51,7 +51,7 @@ jobs:
         tags: dahyunlucy/deom3:latest # 본인의 도커에미지를 넣어준다 
 
     - name: Image digest
-      run: echo $
+      run: echo ${{ steps.docker_build.outputs.digest }} 
 
   # deploy:
   #   needs: build
