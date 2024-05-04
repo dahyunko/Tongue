@@ -99,7 +99,7 @@
                 <configuration>
                     <images>
                         <image>
-                            <name>tongue/demo3</name>
+                            <name>dahyunlucy/demo3</name>
                             <build>
                                 <dockerFileDir>${basedir}</dockerFileDir>
                             </build>
