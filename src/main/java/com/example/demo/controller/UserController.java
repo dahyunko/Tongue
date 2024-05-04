@@ -36,6 +36,7 @@ public class UserController {
         Map<String, String> maps = new HashMap<>();
         maps.put("id", id);
         maps.put("role", role);
+        maps.put("message", "hello");
 
         return new ResponseEntity<Map>(maps,HttpStatus.OK);
     }
