@@ -72,12 +72,12 @@ jobs:
         
       - name: Stop and remove existing container
         run: |
-          docker stop deom3 || true
-          docker rm -f deom3 || true
+          docker stop demo3 || true
+          docker rm -f demo3 || true
         
       - name: Docker run
         run: |
-          docker run -d -p 8080:8080 --name deom3 --restart always dahyunlucy/deom3:latest
+          docker run -d -p 8080:8080 --name demo3 --restart always dahyunlucy/demo3:latest
 
 
   # deploy:
