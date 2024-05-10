@@ -1,7 +1,12 @@
 package com.example.demo.model.mapper;
 
+import com.example.demo.model.magazine.MagazineDto;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 @Mapper
-public class MagazineMapper {
+public interface MagazineMapper {
+    MagazineDto viewMagazine(String magazine_id) throws Exception;
+    List<String> getMagazineIdList(String user_id) throws Exception;
 }
