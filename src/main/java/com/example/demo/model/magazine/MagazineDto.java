@@ -15,8 +15,10 @@ public class MagazineDto {
     private List<TravelInfoDto> travelInfoDtoList;
     private List<MagazineDetailDto> magazineDetailDtoList;
 
-    public MagazineDto(){
-
+    public MagazineDto(String magazine_id, String user_id, String travel_id){
+        this.magazine_id = magazine_id;
+        this.user_id = user_id;
+        this.travel_id = travel_id;
     }
 
     @Override

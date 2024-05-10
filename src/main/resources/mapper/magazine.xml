@@ -4,8 +4,8 @@
 
 <mapper namespace="com.example.demo.model.mapper.MagazineMapper">
     <insert id="createMagazine" parameterType="MagazineDto">
-        insert into magazine(magazine_id, user_id, travel_id, magazine_title)
-        values (#{magazine_id}, #{user_id}, #{travel_id}, #{magazine_title})
+        insert into magazine(magazine_id, user_id, travel_id)
+        values (#{magazine_id}, #{user_id}, #{travel_id})
     </insert>
 
     <select id="viewMagazine" parameterType="string" resultType="MagazineDto">
