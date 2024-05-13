@@ -17,6 +17,12 @@ public class MagazineDetailDto {
     private TravelInfoDto travelInfoDto;
     private PlaceDto placeDto;
 
+    public MagazineDetailDto(String magazine_detail_id, String magazine_id, String travel_info_id){
+        this.magazine_detail_id = magazine_detail_id;
+        this.magazine_id = magazine_id;
+        this.travel_info_id = travel_info_id;
+    }
+
     public MagazineDetailDto(String content, String img){
         this.content = content;
         this.img = img;

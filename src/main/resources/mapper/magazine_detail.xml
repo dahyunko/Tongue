@@ -4,11 +4,17 @@
 
 <mapper namespace="com.example.demo.model.mapper.MagazineDetailMapper">
     <insert id="registMagazineDetail" parameterType="magazineDetailDto">
-        insert into magazine_detail (magazine_detail_id, magazine_id, travel_info_id, content, img)
-        values (#{magazine_detail_id}, ${magazine_id}, ${travel_info_id}, ${content}, ${img})
+        insert into magazine_detail (magazine_detail_id, magazine_id, travel_info_id)
+        values (#{magazine_detail_id}, #{magazine_id}, #{travel_info_id})
     </insert>
 
-    <select id="listMagazineDetail" parameterType="string" resultMap="MagazineDetailDto">
+    <update id="updateMagazineDetail" parameterType="magazineDetailDto">
+        update magazine_detail
+        set content = #{content}, img = #{img}
+        where magazine_detail_id = #{magazine_detail_id}
+    </update>
+
+    <select id="listMagazineDetail" parameterType="string" resultType="magazineDetailDto">
         select magazine_detail_id, magazine_id, travel_info_id, content, img
         from magazine_detail
         where magazine_id = #{magazine_id}

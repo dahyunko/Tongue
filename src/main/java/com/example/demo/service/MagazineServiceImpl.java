@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.model.magazine.MagazineDetailDto;
 import com.example.demo.model.magazine.MagazineDto;
 import com.example.demo.model.mapper.*;
+import com.example.demo.model.travel.TravelDto;
+import com.example.demo.model.travel.TravelInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ public class MagazineServiceImpl implements MagazineService {
     private static String TRAVEL = "travel";
     private static String TRAVELINFO = "travelinfo";
     private static String MAGAZINE = "magazine";
-    private static String MAGAZINEINFO = "magazineinfo";
+    private static String MAGAZINEDETAIL = "magazinedetail";
 
     public MagazineServiceImpl(MagazineMapper magazineMapper, MagazineDetailMapper magazineDetailMapper, TravelMapper travelMapper, TravelInfoMapper travelInfoMapper, PlaceMapper placeMapper) {
         this.magazineMapper = magazineMapper;
@@ -46,15 +48,27 @@ public class MagazineServiceImpl implements MagazineService {
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
 
-//        System.out.println(generatedString);
         return generatedString;
     }
 
     @Override
-    public void createMagazine(String user_id, String travel_id) throws Exception {
-        String MagazineId = MAGAZINE + generateRandomId();
-        MagazineDto magazineDto = new MagazineDto(MagazineId, user_id, travel_id);
-        magazineMapper.createMagazine(magazineDto);
+    public List<MagazineDetailDto> createMagazineMemo(String user_id, String travel_id){
+        try{
+            String MagazineId = MAGAZINE + generateRandomId();
+            MagazineDto magazineDto = new MagazineDto(MagazineId, user_id, travel_id);
+            magazineMapper.createMagazine(magazineDto);
+
+            List<TravelInfoDto> travelInfoDtos = travelInfoMapper.listTravelInfo(travel_id);
+            for (TravelInfoDto travelInfoDto : travelInfoDtos){
+                String magazine_detail_id = MAGAZINEDETAIL + generateRandomId();
+                MagazineDetailDto magazineDetailDto = new MagazineDetailDto(magazine_detail_id, MagazineId, travelInfoDto.getTravelInfoId());
+                magazineDetailMapper.registMagazineDetail(magazineDetailDto);
+            }
+            return magazineDetailMapper.listMagazineDetail(MagazineId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

@@ -3,12 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.example.demo.model.mapper.MagazineMapper">
-    <insert id="createMagazine" parameterType="MagazineDto">
+    <insert id="createMagazine" parameterType="magazineDto">
         insert into magazine(magazine_id, user_id, travel_id)
         values (#{magazine_id}, #{user_id}, #{travel_id})
     </insert>
 
-    <select id="viewMagazine" parameterType="string" resultType="MagazineDto">
+    <select id="viewMagazine" parameterType="string" resultType="magazineDto">
         select magazine_id, user_id, travel_id, magazine_title
         from magazine
         where magazine_id = #{magazine_id}

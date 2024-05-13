@@ -9,7 +9,7 @@ import java.util.List;
 public interface MagazineService {
 
     // MagazineMapper
-    void createMagazine(String user_id, String travel_id) throws Exception;
+    List<MagazineDetailDto> createMagazineMemo(String user_id, String travel_id);
     MagazineDto viewMagazine(String magazine_id) throws Exception;
     List<String> getMagazineIdList(String user_id) throws Exception;
 
