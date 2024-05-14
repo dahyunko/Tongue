@@ -6,9 +6,9 @@ import lombok.Getter;
 
 @Getter
 public class MagazineDetailDto {
-    private String magazine_detail_id;
-    private String magazine_id;
-    private String travel_info_id;
+    private String magazineDetailId;
+    private String magazineId;
+    private String travelInfoId;
 
     private String content;
     private String img;
@@ -17,10 +17,12 @@ public class MagazineDetailDto {
     private TravelInfoDto travelInfoDto;
     private PlaceDto placeDto;
 
-    public MagazineDetailDto(String magazine_detail_id, String magazine_id, String travel_info_id){
-        this.magazine_detail_id = magazine_detail_id;
-        this.magazine_id = magazine_id;
-        this.travel_info_id = travel_info_id;
+    public MagazineDetailDto(){}
+
+    public MagazineDetailDto(String magazineDetailId, String magazineId, String travelInfoId){
+        this.magazineDetailId = magazineDetailId;
+        this.magazineId = magazineId;
+        this.travelInfoId = travelInfoId;
     }
 
     public MagazineDetailDto(String content, String img){
@@ -31,9 +33,9 @@ public class MagazineDetailDto {
     @Override
     public String toString() {
         return "MagazineDetailDto{" +
-                "magazine_detail_id='" + magazine_detail_id + '\'' +
-                ", magazine_id='" + magazine_id + '\'' +
-                ", travel_info_id='" + travel_info_id + '\'' +
+                "magazine_detail_id='" + magazineDetailId + '\'' +
+                ", magazine_id='" + magazineId + '\'' +
+                ", travel_info_id='" + travelInfoId + '\'' +
                 ", content='" + content + '\'' +
                 ", img='" + img + '\'' +
                 '}';

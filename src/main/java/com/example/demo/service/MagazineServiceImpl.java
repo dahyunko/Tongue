@@ -51,20 +51,35 @@ public class MagazineServiceImpl implements MagazineService {
         return generatedString;
     }
 
+    // 일정 기록하기 눌렀을 때 실행 -> 매거진 디테일 생성하기
     @Override
-    public List<MagazineDetailDto> createMagazineMemo(String user_id, String travel_id){
+    public List<MagazineDetailDto> createMagazineMemo(String userId, String travelId){
         try{
-            String MagazineId = MAGAZINE + generateRandomId();
-            MagazineDto magazineDto = new MagazineDto(MagazineId, user_id, travel_id);
+            String magazineId = MAGAZINE + generateRandomId();
+            MagazineDto magazineDto = new MagazineDto(magazineId, userId, travelId);
             magazineMapper.createMagazine(magazineDto);
 
-            List<TravelInfoDto> travelInfoDtos = travelInfoMapper.listTravelInfo(travel_id);
+            List<TravelInfoDto> travelInfoDtos = travelInfoMapper.listTravelInfo(travelId);
             for (TravelInfoDto travelInfoDto : travelInfoDtos){
-                String magazine_detail_id = MAGAZINEDETAIL + generateRandomId();
-                MagazineDetailDto magazineDetailDto = new MagazineDetailDto(magazine_detail_id, MagazineId, travelInfoDto.getTravelInfoId());
+                String magazineDetailId = MAGAZINEDETAIL + generateRandomId();
+                MagazineDetailDto magazineDetailDto = new MagazineDetailDto(magazineDetailId, magazineId, travelInfoDto.getTravelInfoId());
                 magazineDetailMapper.registMagazineDetail(magazineDetailDto);
             }
-            return magazineDetailMapper.listMagazineDetail(MagazineId);
+//            log.info(magazineId);
+            return magazineDetailMapper.listMagazineDetail(magazineId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    // 매거진 만들기 -> 매거진 업데이트 하고 gemini로 값 넘기기
+    @Override
+    public void registMagazineDetail(List<MagazineDetailDto> magazineDetailDtos) throws Exception {
+        try {
+            for(MagazineDetailDto magazineDetailDto : magazineDetailDtos){
+                magazineDetailMapper.updateMagazineDetail(magazineDetailDto);
+            }
         }catch (Exception e){
             e.printStackTrace();
             throw new IllegalArgumentException();
@@ -72,19 +87,18 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public MagazineDto viewMagazine(String magazine_id) throws Exception {
-
-        return null;
+    public List<MagazineDetailDto> viewMagazine(String magazine_id) throws Exception {
+        try{
+            return magazineDetailMapper.listMagazineDetail(magazine_id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
     public List<String> getMagazineIdList(String user_id) throws Exception {
         return null;
-    }
-
-    @Override
-    public void registMagazineDetail(MagazineDetailDto magazineDetailDto) throws Exception {
-
     }
 
     @Override

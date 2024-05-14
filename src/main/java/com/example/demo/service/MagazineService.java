@@ -10,11 +10,11 @@ public interface MagazineService {
 
     // MagazineMapper
     List<MagazineDetailDto> createMagazineMemo(String user_id, String travel_id);
-    MagazineDto viewMagazine(String magazine_id) throws Exception;
+    List<MagazineDetailDto> viewMagazine(String magazine_id) throws Exception;
     List<String> getMagazineIdList(String user_id) throws Exception;
 
     // MagazineDetailMapper
-    void registMagazineDetail(MagazineDetailDto magazineDetailDto) throws Exception;
+    void registMagazineDetail(List<MagazineDetailDto> magazineDetailDtos) throws Exception;
     List<MagazineDetailDto> listMagazineDetail(String magazine_id) throws Exception;
 
 }

@@ -5,30 +5,33 @@ import com.example.demo.model.travel.TravelInfoDto;
 import java.util.List;
 
 public class MagazineDto {
-    private String magazine_id;
-    private String user_id;
-    private String travel_id;
-    private String magazine_title;
-    private int reuse_cnt;
+    private String magazineId;
+    private String userId;
+    private String travelId;
+    private String magazineTitle;
+    private int reuseCnt;
     private int hit;
     private int like;
     private List<TravelInfoDto> travelInfoDtoList;
     private List<MagazineDetailDto> magazineDetailDtoList;
 
-    public MagazineDto(String magazine_id, String user_id, String travel_id){
-        this.magazine_id = magazine_id;
-        this.user_id = user_id;
-        this.travel_id = travel_id;
+    public MagazineDto() {}
+
+    public MagazineDto(String magazineId, String userId, String travelId){
+        this.magazineId = magazineId;
+        this.userId = userId;
+        this.travelId = travelId;
     }
+
 
     @Override
     public String toString() {
         return "MagazineDto{" +
-                "magazine_id='" + magazine_id + '\'' +
-                ", user_id='" + user_id + '\'' +
-                ", travel_id='" + travel_id + '\'' +
-                ", magazine_title='" + magazine_title + '\'' +
-                ", reuse_cnt=" + reuse_cnt +
+                "magazine_id='" + magazineId + '\'' +
+                ", user_id='" + userId + '\'' +
+                ", travel_id='" + travelId + '\'' +
+                ", magazine_title='" + magazineTitle + '\'' +
+                ", reuse_cnt=" + reuseCnt +
                 ", hit=" + hit +
                 ", like=" + like +
                 ", travelInfoDtoList=" + travelInfoDtoList +
