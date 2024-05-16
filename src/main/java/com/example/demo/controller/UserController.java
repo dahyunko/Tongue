@@ -59,4 +59,15 @@ public class UserController {
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
+    @GetMapping("/userInfo")
+    public ResponseEntity<?> getUserInfo() throws Exception{
+        try{
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            System.out.println(userId);
+            return new ResponseEntity<String>(userId, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }
