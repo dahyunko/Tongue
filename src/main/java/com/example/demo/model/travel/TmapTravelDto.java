@@ -4,13 +4,14 @@ import lombok.Getter;
 
 @Getter
 public class TmapTravelDto {
-    private String day;
+    private int day;
     private String loc;
     private String transport;
     private String des;
     private int cost;
     private String lat;
     private String lon;
+    private String address;
 
     @Override
     public String toString() {

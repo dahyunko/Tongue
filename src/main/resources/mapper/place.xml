@@ -11,15 +11,16 @@
         <result column="transport" property="transport"/>
         <result column="lat" property="lat"/>
         <result column="lon" property="lon"/>
+        <result column="address" property="address" />
     </resultMap>
 
     <insert id="registPlace" parameterType="placeDto">
-        insert into places (place_id, loc, des, cost, lat, lon)
-        values (#{placeId}, #{loc}, #{des}, #{cost}, #{lat}, #{lat})
+        insert into places (place_id, loc, des, cost, lat, lon, address)
+        values (#{placeId}, #{loc}, #{des}, #{cost}, #{lat}, #{lat}, #{address})
     </insert>
 
     <select id="viewPlace" parameterType="string" resultMap="place">
-        select place_id, loc, des, cost, transport, lat, lon
+        select place_id, loc, des, cost, transport, lat, lon, address
         from places
         where place_id = #{placeId}
     </select>
