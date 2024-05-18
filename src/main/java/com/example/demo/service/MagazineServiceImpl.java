@@ -75,11 +75,14 @@ public class MagazineServiceImpl implements MagazineService {
 
     // 매거진 만들기 -> 매거진 업데이트 하고 gemini로 값 넘기기
     @Override
-    public void registMagazineDetail(List<MagazineDetailDto> magazineDetailDtos) throws Exception {
+    public List<MagazineDetailDto> registMagazineDetail(List<MagazineDetailDto> magazineDetailDtos) throws Exception {
         try {
+            String magazineId = "";
             for(MagazineDetailDto magazineDetailDto : magazineDetailDtos){
                 magazineDetailMapper.updateMagazineDetail(magazineDetailDto);
+                magazineId = magazineDetailDto.getMagazineId();
             }
+            return magazineDetailMapper.listMagazineDetail(magazineId);
         }catch (Exception e){
             e.printStackTrace();
             throw new IllegalArgumentException();

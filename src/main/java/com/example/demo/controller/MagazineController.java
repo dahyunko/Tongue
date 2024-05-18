@@ -36,8 +36,9 @@ public class MagazineController {
     public ResponseEntity<?> generateMagazine(@PathVariable("magazineId") String magazineId, @RequestBody List<MagazineDetailDto> magazineDetailDtos){
         try{
 //            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            magazineService.registMagazineDetail(magazineDetailDtos);
-            return new ResponseEntity<List<MagazineDetailDto>>(magazineDetailDtos, HttpStatus.OK);
+            List<MagazineDetailDto> magazineDetailDtoList =magazineService.registMagazineDetail(magazineDetailDtos);
+//            return new ResponseEntity<List<MagazineDetailDto>>(magazineDetailDtos, HttpStatus.OK);
+            return new ResponseEntity<List<MagazineDetailDto>>(magazineDetailDtoList, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }

@@ -30,6 +30,14 @@ public class MagazineDetailDto {
         this.img = img;
     }
 
+    public MagazineDetailDto(String magazineDetailId, String magazineId, String travelInfoId, String content, String img){
+        this.magazineDetailId = magazineDetailId;
+        this.magazineId = magazineId;
+        this.travelInfoId = travelInfoId;
+        this.content = content;
+        this.img = img;
+    }
+
     @Override
     public String toString() {
         return "MagazineDetailDto{" +
