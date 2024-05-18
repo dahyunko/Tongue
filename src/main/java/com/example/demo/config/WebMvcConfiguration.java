@@ -1,4 +1,5 @@
 package com.example.demo.config;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.mybatis.spring.annotation.MapperScan;
