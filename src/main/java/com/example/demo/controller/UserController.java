@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
+@CrossOrigin(origins = "*" )
 @RequestMapping("/user")
 public class UserController {
     private final UserService userService;
@@ -58,5 +59,16 @@ public class UserController {
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping("/userInfo")
+    public ResponseEntity<?> getUserInfo() throws Exception{
+        try{
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            System.out.println(userId);
+            return new ResponseEntity<String>(userId, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }
