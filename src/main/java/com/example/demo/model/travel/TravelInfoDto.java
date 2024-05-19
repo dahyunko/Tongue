@@ -5,13 +5,13 @@ import lombok.Getter;
 @Getter
 public class TravelInfoDto {
     private String travelInfoId;
-    private String day;
+    private int day;
     private int order;
     private TravelDto travelDto;
     private PlaceDto placeDto;
     private String placeId;
 
-    public TravelInfoDto(String travelInfoId, String day, int order, PlaceDto placeDto) {
+    public TravelInfoDto(String travelInfoId, int day, int order, PlaceDto placeDto) {
         this.travelInfoId = travelInfoId;
         this.day =day;
         this.order = order;
@@ -29,7 +29,7 @@ public class TravelInfoDto {
                 '}';
     }
 
-    public TravelInfoDto(String travelInfoId, String day, int order, TravelDto travelDto , PlaceDto placeDto) {
+    public TravelInfoDto(String travelInfoId, int day, int order, TravelDto travelDto , PlaceDto placeDto) {
         this.travelInfoId = travelInfoId;
         this.day = day;
         this.order = order;
@@ -37,7 +37,7 @@ public class TravelInfoDto {
         this.placeDto = placeDto;
     }
 
-    public TravelInfoDto(String travelInfoId, String day, int order, String placeId) {
+    public TravelInfoDto(String travelInfoId, int day, int order, String placeId) {
         this.travelInfoId = travelInfoId;
         this.day = day;
         this.order = order;
