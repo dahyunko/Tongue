@@ -47,12 +47,12 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void registTravel(List<TmapTravelDto> tmapTravelDtos, String travelName, String userId , int travelDay) {
+    public void registTravel(List<TmapTravelDto> tmapTravelDtos, String travelName, String userId , int travelDay, Boolean travelOwner) {
         List<TravelInfoDto> travelInfoDtoList = new ArrayList<>();
 
         try{
             String travelId = TRAVEL + generateRandomId();
-            TravelDto travelDto = new TravelDto(travelId, travelName, userId, travelDay);
+            TravelDto travelDto = new TravelDto(travelId, travelName, userId, travelDay, travelOwner);
             log.info("travelDto: {}", travelDto);
             travelMapper.registTravel(travelDto);
 
@@ -106,7 +106,8 @@ public class TravelServiceImpl implements TravelService {
                     travelDto.getUserId(),
                     travelDto.getTravelName(),
                     travelInfoDtoList,
-                    travelDto.getTravelDay()
+                    travelDto.getTravelDay(),
+                    travelDto.getTravelOwner()
             );
         }catch (Exception e){
             e.printStackTrace();

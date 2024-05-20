@@ -8,15 +8,16 @@
         <result column="user_id" property="userId" />
         <result column="travel_name" property="travelName" />
         <result column="travel_day" property="travelDay" />
+        <result column="travel_owner" property="travelOwner" />
     </resultMap>
 
     <insert id="registTravel" parameterType="travelDto">
-        insert into travels (travel_id, travel_name, user_id, travel_day)
-        values (#{travelId}, #{travelName}, #{userId}, #{travelDay})
+        insert into travels (travel_id, travel_name, user_id, travel_day, travel_owner)
+        values (#{travelId}, #{travelName}, #{userId}, #{travelDay}, #{travelOwner})
     </insert>
 
     <select id="viewTravel" parameterType="string" resultMap="travel">
-        select travel_id, user_id, travel_name, travel_day
+        select travel_id, user_id, travel_name, travel_day, travel_owner
         from travels
         where travel_id = #{travelId}
     </select>
