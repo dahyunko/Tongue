@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.magazine.MagazineDetailDto;
 import com.example.demo.model.magazine.MagazineDto;
+import com.example.demo.model.travel.TravelDto;
 import com.example.demo.model.travel.TravelInfoDto;
 import com.example.demo.service.MagazineService;
 import com.example.demo.service.TravelService;
@@ -52,12 +53,13 @@ public class MagazineController {
     @GetMapping("/{magazineId}")
     public ResponseEntity<?> viewMagazine(@PathVariable("magazineId") String magazineId){
         try {
-//            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            MagazineDto magazineInfo = magazineService.viewMagazine(magazineId);
-            List<TravelInfoDto> travelInfoDtos = travelService.listTravelInfo(magazineInfo.getTravelId());
-            List<MagazineDetailDto> magazineDetailDtos = magazineService.viewMagazineDetail(magazineId);
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            MagazineDto magazineDto = new MagazineDto(magazineId, userId, magazineInfo.getTravelId(), magazineInfo.getMagazineTitle(), travelInfoDtos, magazineDetailDtos);
+//            MagazineDto magazineInfo = magazineService.viewMagazine(magazineId);
+////            List<TravelInfoDto> travelInfoDtos = travelService.listTravelInfo(magazineInfo.getTravelId());
+//            TravelDto travelDto = travelService.viewTravel(magazineInfo.getTravelId(), userId);
+//            List<MagazineDetailDto> magazineDetailDtos = magazineService.viewMagazineDetail(magazineId);
+//            MagazineDto magazineDto = new MagazineDto(magazineId, userId, magazineInfo.getTravelId(), magazineInfo.getMagazineTitle(), travelDto, magazineDetailDtos);
+            MagazineDto magazineDto = magazineService.viewDetailMagezine(magazineId, userId);
             return new ResponseEntity<MagazineDto>(magazineDto, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);

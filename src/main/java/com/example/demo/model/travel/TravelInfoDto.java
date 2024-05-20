@@ -29,6 +29,8 @@ public class TravelInfoDto {
                 '}';
     }
 
+    public TravelInfoDto() {}
+
     public TravelInfoDto(String travelInfoId, int day, int order, TravelDto travelDto , PlaceDto placeDto) {
         this.travelInfoId = travelInfoId;
         this.day = day;

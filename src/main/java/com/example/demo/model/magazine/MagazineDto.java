@@ -1,5 +1,6 @@
 package com.example.demo.model.magazine;
 
+import com.example.demo.model.travel.TravelDto;
 import com.example.demo.model.travel.TravelInfoDto;
 import lombok.Getter;
 
@@ -14,6 +15,7 @@ public class MagazineDto {
     private int reuseCnt;
     private int magazineHit;
     private int magazineLike;
+    private TravelDto travelDto;
     private List<TravelInfoDto> travelInfoDtoList;
     private List<MagazineDetailDto> magazineDetailDtoList;
 
@@ -25,12 +27,21 @@ public class MagazineDto {
         this.travelId = travelId;
     }
 
-    public MagazineDto(String magazineId, String userId, String travelId, String magazineTitle, List<TravelInfoDto> travelInfoDtoList, List<MagazineDetailDto> magazineDetailDtoList) {
+    public MagazineDto(String magazineId, String userId, String travelId, String magazineTitle, List<MagazineDetailDto> magazineDetailDtoList) {
         this.magazineId = magazineId;
         this.userId = userId;
         this.travelId = travelId;
         this.magazineTitle = magazineTitle;
-        this.travelInfoDtoList = travelInfoDtoList;
+        this.magazineDetailDtoList = magazineDetailDtoList;
+    }
+
+    public MagazineDto(String magazineId, String userId, String travelId, String magazineTitle, TravelDto travelDto, List<MagazineDetailDto> magazineDetailDtoList) {
+        this.magazineId = magazineId;
+        this.userId = userId;
+        this.travelId = travelId;
+        this.magazineTitle = magazineTitle;
+        this.travelDto = travelDto;
+//        this.travelInfoDtoList = travelInfoDtoList;
         this.magazineDetailDtoList = magazineDetailDtoList;
     }
 }

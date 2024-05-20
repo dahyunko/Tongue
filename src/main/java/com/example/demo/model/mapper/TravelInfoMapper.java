@@ -11,8 +11,7 @@ import java.util.List;
 public interface TravelInfoMapper {
     void registTravelInfo(TravelInfoDto travelInfoDto) throws SQLException;
 
-    TravelInfoDto viewTravelInfo(String travelId) throws SQLException;
-
+    TravelInfoDto viewTravelInfo(String travelInfoId) throws SQLException;
     List<TravelInfoDto> listTravelInfo(String travelId) throws Exception;
     void deleteTravelInfoList(String travelId) throws Exception;
 }
