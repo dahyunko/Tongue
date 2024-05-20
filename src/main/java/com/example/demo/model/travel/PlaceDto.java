@@ -13,8 +13,9 @@ public class PlaceDto {
     private String lat;
     private String lon;
     private TravelInfoDto travelInfoDto;
+    private String address;
 
-    public PlaceDto(String placeId, String loc, String des, int cost, String transport, String lat, String lon) {
+    public PlaceDto(String placeId, String loc, String des, int cost, String transport, String lat, String lon, String address) {
         this.placeId = placeId;
         this.loc = loc;
         this.des = des;
@@ -22,5 +23,6 @@ public class PlaceDto {
         this.transport = transport;
         this.lat = lat;
         this.lon = lon;
+        this.address = address;
     }
 }

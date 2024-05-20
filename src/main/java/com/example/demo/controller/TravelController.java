@@ -23,10 +23,10 @@ public class TravelController {
     }
 
     @PostMapping("/regist")
-    public ResponseEntity<?> regist(@RequestBody List<TmapTravelDto> tmapTravelDtos, @RequestParam("travelName") String travelName) throws Exception{
+    public ResponseEntity<?> regist(@RequestBody List<TmapTravelDto> tmapTravelDtos, @RequestParam("travelName") String travelName, @RequestParam("travelDay") int travelDay) throws Exception{
         try{
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            travelService.registTravel(tmapTravelDtos, travelName, userId);
+            travelService.registTravel(tmapTravelDtos, travelName, userId, travelDay);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
