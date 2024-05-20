@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.model.mapper.MagazineDetailMapper">
+    <resultMap id="magazine_detail" type="magazineDetailDto">
+        <result column="magazine_detail_id" property="magazineDetailId" />
+        <result column="magazine_id" property="magazineId" />
+        <result column="travel_info_id" property="travelInfoId" />
+        <result column="content" property="content" />
+        <result column="img" property="img" />
+    </resultMap>
+
+    <insert id="registMagazineDetail" parameterType="magazineDetailDto">
+        insert into magazine_detail (magazine_detail_id, magazine_id, travel_info_id)
+        values (#{magazineDetailId}, #{magazineId}, #{travelInfoId})
+    </insert>
+
+    <update id="updateMagazineDetail" parameterType="magazineDetailDto">
+        update magazine_detail
+        set content = #{content}, img = #{img}
+        where magazine_detail_id = #{magazineDetailId}
+    </update>
+
+    <select id="listMagazineDetail" parameterType="string" resultMap="magazine_detail">
+        select magazine_detail_id, magazine_id, travel_info_id, content, img
+        from magazine_detail
+        where magazine_id = #{magazineId}
+    </select>
+
+
+</mapper>
