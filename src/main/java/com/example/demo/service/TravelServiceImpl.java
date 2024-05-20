@@ -47,22 +47,18 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void registTravel(List<TmapTravelDto> tmapTravelDtos, String travelName, String userId) {
+    public void registTravel(List<TmapTravelDto> tmapTravelDtos, String travelName, String userId , int travelDay) {
         List<TravelInfoDto> travelInfoDtoList = new ArrayList<>();
 
         try{
             String travelId = TRAVEL + generateRandomId();
-            TravelDto travelDto = new TravelDto(travelId, travelName, userId);
+            TravelDto travelDto = new TravelDto(travelId, travelName, userId, travelDay);
             log.info("travelDto: {}", travelDto);
             travelMapper.registTravel(travelDto);
 
             for (TmapTravelDto tmapTravelDto : tmapTravelDtos) {
-                if (ORDER == 4) {
-                    ORDER = 1;
-                }
-
                 String placeId = PLACE + generateRandomId();
-                PlaceDto placeDto = new PlaceDto(placeId, tmapTravelDto.getLoc(), tmapTravelDto.getDes(), tmapTravelDto.getCost(), tmapTravelDto.getTransport(), tmapTravelDto.getLat(), tmapTravelDto.getLoc());
+                PlaceDto placeDto = new PlaceDto(placeId, tmapTravelDto.getLoc(), tmapTravelDto.getDes(), tmapTravelDto.getCost(), tmapTravelDto.getTransport(), tmapTravelDto.getLat(), tmapTravelDto.getLoc(), tmapTravelDto.getAddress());
                 placeMapper.registPlace(placeDto);
 
                 String travelInfoId = TRAVELINFO + generateRandomId();
@@ -109,7 +105,8 @@ public class TravelServiceImpl implements TravelService {
                     travelDto.getTravelId(),
                     travelDto.getUserId(),
                     travelDto.getTravelName(),
-                    travelInfoDtoList
+                    travelInfoDtoList,
+                    travelDto.getTravelDay()
             );
         }catch (Exception e){
             e.printStackTrace();

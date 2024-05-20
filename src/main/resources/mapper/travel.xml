@@ -7,15 +7,16 @@
         <result column="travel_id" property="travelId" />
         <result column="user_id" property="userId" />
         <result column="travel_name" property="travelName" />
+        <result column="travel_day" property="travelDay" />
     </resultMap>
 
     <insert id="registTravel" parameterType="travelDto">
-        insert into travels (travel_id, travel_name, user_id)
-        values (#{travelId}, #{travelName}, #{userId})
+        insert into travels (travel_id, travel_name, user_id, travel_day)
+        values (#{travelId}, #{travelName}, #{userId}, #{travelDay})
     </insert>
 
     <select id="viewTravel" parameterType="string" resultMap="travel">
-        select travel_id, user_id, travel_name
+        select travel_id, user_id, travel_name, travel_day
         from travels
         where travel_id = #{travelId}
     </select>
