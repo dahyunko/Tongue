@@ -9,6 +9,9 @@
         <result column="user_id" property="userId" />
         <result column="travel_id" property="travelId" />
         <result column="magazine_title" property="magazineTitle" />
+        <result column="reuse_cnt" property="reuseCnt"/>
+        <result column="magazine_hit" property="magazineHit"/>
+        <result column="magazine_like" property="magazineLike"/>
     </resultMap>
 
     <insert id="createMagazine" parameterType="magazineDto">
@@ -28,5 +31,9 @@
         where user_id = #{userId}
     </select>
 
-
+    <select id="getMagazineList" parameterType="string" resultMap="magazine">
+        select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like
+        from magazine
+        where user_id = #{userId}
+    </select>
 </mapper>

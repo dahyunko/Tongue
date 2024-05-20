@@ -47,18 +47,18 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void registTravel(List<TmapTravelDto> tmapTravelDtos, String travelName, String userId , int travelDay) {
+    public void registTravel(List<TmapTravelDto> tmapTravelDtos, String travelName, String userId , int travelDay, Boolean travelOwner) {
         List<TravelInfoDto> travelInfoDtoList = new ArrayList<>();
 
         try{
             String travelId = TRAVEL + generateRandomId();
-            TravelDto travelDto = new TravelDto(travelId, travelName, userId, travelDay);
+            TravelDto travelDto = new TravelDto(travelId, travelName, userId, travelDay, travelOwner);
             log.info("travelDto: {}", travelDto);
             travelMapper.registTravel(travelDto);
 
             for (TmapTravelDto tmapTravelDto : tmapTravelDtos) {
                 String placeId = PLACE + generateRandomId();
-                PlaceDto placeDto = new PlaceDto(placeId, tmapTravelDto.getLoc(), tmapTravelDto.getDes(), tmapTravelDto.getCost(), tmapTravelDto.getTransport(), tmapTravelDto.getLat(), tmapTravelDto.getLoc(), tmapTravelDto.getAddress());
+                PlaceDto placeDto = new PlaceDto(placeId, tmapTravelDto.getLoc(), tmapTravelDto.getDes(), tmapTravelDto.getCost(), tmapTravelDto.getTransport(), tmapTravelDto.getLat(), tmapTravelDto.getLon(), tmapTravelDto.getAddress());
                 placeMapper.registPlace(placeDto);
 
                 String travelInfoId = TRAVELINFO + generateRandomId();
@@ -77,8 +77,70 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public void deleteTravel(String travelId, String userId) {
+    public void deleteTravel(String travelId, String userId) throws Exception {
+        TravelDto travelDto = viewTravel(travelId, userId);
+        if(!userId.equals(travelDto.getUserId())){
+            throw new Exception("user 아님");
+        }
 
+        try{
+            log.info("삭제: ", travelDto);
+            travelInfoMapper.deleteTravelInfoList(travelId);
+            for(TravelInfoDto travelInfoDto : travelDto.getTravelInfoDtoList()) {
+                PlaceDto placeDto = travelInfoDto.getPlaceDto();
+                placeMapper.deletePlace(placeDto.getPlaceId());
+            }
+            travelMapper.deleteTravel(travelId, userId);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void duplicateTravel(String travelId, String userId) throws Exception{
+        TravelDto travelDtoClone = viewTravel(travelId, userId);
+
+        try{
+            String travelIdClone = TRAVEL + generateRandomId();
+            Boolean isOwner = true;
+            TravelDto travelDto = new TravelDto(travelIdClone,
+                    travelDtoClone.getTravelName(),
+                    userId,
+                    travelDtoClone.getTravelDay(),
+                    !isOwner);
+            log.info("travelDtoClone: {}", travelDto);
+            travelMapper.registTravel(travelDto);
+
+            for(TravelInfoDto travelInfoDto : travelDtoClone.getTravelInfoDtoList()){
+                String placeIdClone = PLACE + generateRandomId();
+                PlaceDto placeDto = new PlaceDto(
+                        placeIdClone,
+                        travelInfoDto.getPlaceDto().getLoc(),
+                        travelInfoDto.getPlaceDto().getDes(),
+                        travelInfoDto.getPlaceDto().getCost(),
+                        travelInfoDto.getPlaceDto().getTransport(),
+                        travelInfoDto.getPlaceDto().getLat(),
+                        travelInfoDto.getPlaceDto().getLon(),
+                        travelInfoDto.getPlaceDto().getAddress());
+
+                placeMapper.registPlace(placeDto);
+
+                String travelInfoIdClone = TRAVELINFO + generateRandomId();
+                TravelInfoDto travelInfoDtoClone = new TravelInfoDto(travelInfoIdClone
+                        ,travelInfoDto.getDay(), ORDER++,travelDto, placeDto);
+                log.info("travelInfoDtoClone: {} ", travelInfoDtoClone.toString());
+                travelInfoMapper.registTravelInfo(travelInfoDtoClone);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<TravelDto> listMyTravel(String userId) throws Exception {
+        List<TravelDto> travelDtoList = travelMapper.listMyTravel(userId);
+
+        return travelDtoList;
     }
 
     @Override
@@ -106,7 +168,8 @@ public class TravelServiceImpl implements TravelService {
                     travelDto.getUserId(),
                     travelDto.getTravelName(),
                     travelInfoDtoList,
-                    travelDto.getTravelDay()
+                    travelDto.getTravelDay(),
+                    travelDto.getTravelOwner()
             );
         }catch (Exception e){
             e.printStackTrace();
@@ -124,5 +187,7 @@ public class TravelServiceImpl implements TravelService {
         }
         return travelDtoList;
     }
+
+
 
 }
