@@ -16,7 +16,7 @@
 
     <insert id="registPlace" parameterType="placeDto">
         insert into places (place_id, loc, des, cost, lat, lon, address)
-        values (#{placeId}, #{loc}, #{des}, #{cost}, #{lat}, #{lat}, #{address})
+        values (#{placeId}, #{loc}, #{des}, #{cost}, #{lat}, #{lon}, #{address})
     </insert>
 
     <select id="viewPlace" parameterType="string" resultMap="place">
@@ -25,4 +25,7 @@
         where place_id = #{placeId}
     </select>
 
+    <delete id="deletePlace" parameterType="string" >
+        delete from places where place_id = #{placeId}
+    </delete>
 </mapper>
