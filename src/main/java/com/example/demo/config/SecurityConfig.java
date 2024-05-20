@@ -87,8 +87,8 @@ public class SecurityConfig {
         // 경로별 인가 작업
         http.authorizeHttpRequests((auth)-> auth
                     .requestMatchers("/user/**", "/login", "/").permitAll()
-                    .requestMatchers("/travel/**" , "/user/**", "/board/**").hasAuthority(String.valueOf(UserRole.USER))
-                    .requestMatchers("/travel/**").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
+                    .requestMatchers("/travel/**" , "/user/**", "/board/**", "/mypage/**").hasAuthority(String.valueOf(UserRole.USER))
+                    .requestMatchers("/travel/**", "/magazine/**", "/mypage/**").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
                     .anyRequest().authenticated()
         );
 

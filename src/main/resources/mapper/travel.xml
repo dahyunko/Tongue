@@ -27,4 +27,10 @@
         from travels
     </select>
 
+
+    <select id="listMyTravel" parameterType="string" resultMap="travel">
+        select travel_id, user_id, travel_name, travel_day, travel_owner
+        from travels
+        where user_id = #{userId}
+    </select>
 </mapper>

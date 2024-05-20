@@ -11,4 +11,5 @@ public interface TravelService {
     void registTravel(List<TmapTravelDto> tmapTravelDtos, String travelName, String userId, int travelDay, Boolean travelOwner) throws Exception;
     void updateTravel(TravelDto travelDto);
     void deleteTravel(String travelId, String userId);
+    List<TravelDto> listMyTravel(String userId) throws Exception;
 }

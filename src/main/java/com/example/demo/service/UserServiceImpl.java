@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.mapper.UserMapper;
 import com.example.demo.model.users.CustomUserDetails;
+import com.example.demo.model.users.MyPageDto;
 import com.example.demo.model.users.UserDto;
 import com.example.demo.model.users.UserRole;
 import lombok.extern.slf4j.Slf4j;
@@ -45,6 +46,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public int checkIfExistId(String userId) throws Exception {
         return userMapper.checkIfExistId(userId);
+    }
+
+    @Override
+    public UserDto getUserInfo(String userId) throws Exception {
+        return userMapper.findByUsername(userId);
     }
 
 

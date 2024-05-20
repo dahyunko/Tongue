@@ -82,6 +82,13 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
+    public List<TravelDto> listMyTravel(String userId) throws Exception {
+        List<TravelDto> travelDtoList = travelMapper.listMyTravel(userId);
+
+        return travelDtoList;
+    }
+
+    @Override
     public TravelDto viewTravel(String travelId, String userId) throws Exception {
         try{
             log.info("in");
@@ -125,5 +132,7 @@ public class TravelServiceImpl implements TravelService {
         }
         return travelDtoList;
     }
+
+
 
 }

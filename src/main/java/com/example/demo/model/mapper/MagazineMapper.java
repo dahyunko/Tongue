@@ -9,5 +9,6 @@ import java.util.List;
 public interface MagazineMapper {
     void createMagazine(MagazineDto magazineDto) throws Exception;
     MagazineDto viewMagazine(String magazine_id) throws Exception;
-    List<String> getMagazineIdList(String user_id) throws Exception;
+    List<String> getMagazineIdList(String userId) throws Exception;
+    List<MagazineDto> getMagazineList(String userId) throws Exception;
 }
