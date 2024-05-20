@@ -21,4 +21,9 @@
         where travel_id = #{travelId}
     </select>
 
+    <delete id="deleteTravelInfoList" parameterType="string">
+        delete from travel_info
+        where travel_id = #{travelId}
+    </delete>
+
 </mapper>

@@ -54,4 +54,41 @@ public class TravelController {
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    // 여행 복사
+    @GetMapping("/duplicate/{travelId}")
+    public ResponseEntity<?> duplicateTravel(@PathVariable("travelId") String travelId) throws Exception{
+        try{
+            String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
+            travelService.duplicateTravel(travelId, userId);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping("/update/{travelId}")
+    public ResponseEntity<?> updateTravel(@PathVariable("travelId") String travelId,
+                                          @RequestBody List<TmapTravelDto> tmapTravelDtos, @RequestParam("travelName") String travelName, @RequestParam("travelDay") int travelDay){
+        try{
+            String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
+            travelService.deleteTravel(travelId, userId);
+            Boolean isOwner = true;
+            travelService.registTravel(tmapTravelDtos, travelName, userId, travelDay, isOwner);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping("/delete/{travelId}")
+    public ResponseEntity<?> deleteTravel(@PathVariable("travelId") String travelId){
+        try{
+            String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
+            travelService.deleteTravel(travelId, userId);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }

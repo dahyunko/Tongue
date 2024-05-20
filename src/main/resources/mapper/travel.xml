@@ -33,4 +33,10 @@
         from travels
         where user_id = #{userId}
     </select>
+
+    <delete id="deleteTravel" parameterType="string">
+        delete from travels
+        where travel_id = #{travelId} and user_id=#{userId}
+    </delete>
+
 </mapper>
