@@ -16,6 +16,6 @@ public interface MagazineService {
     MagazineDto viewDetailMagezine(String magazineId, String userId) throws Exception;
 
     // MagazineDetailMapper
-    List<MagazineDetailDto> registMagazineDetail(List<MagazineDetailDto> magazineDetailDtos) throws Exception;
+    String registMagazineDetail(MagazineDto magazineDto) throws Exception;
     List<MagazineDto> listMagazine(String userId) throws Exception;
 }

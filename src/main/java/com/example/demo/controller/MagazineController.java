@@ -39,12 +39,10 @@ public class MagazineController {
     }
 
     @PostMapping("/{magazineId}")
-    public ResponseEntity<?> generateMagazine(@PathVariable("magazineId") String magazineId, @RequestBody List<MagazineDetailDto> magazineDetailDtos){
+    public ResponseEntity<?> generateMagazine(@PathVariable("magazineId") String magazineId, @RequestBody MagazineDto magazineDto){
         try{
-//            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            List<MagazineDetailDto> magazineDetailDtoList =magazineService.registMagazineDetail(magazineDetailDtos);
-//            return new ResponseEntity<List<MagazineDetailDto>>(magazineDetailDtos, HttpStatus.OK);
-            return new ResponseEntity<List<MagazineDetailDto>>(magazineDetailDtoList, HttpStatus.OK);
+            magazineService.registMagazineDetail(magazineDto);
+            return new ResponseEntity<String>(magazineId, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
@@ -54,11 +52,6 @@ public class MagazineController {
     public ResponseEntity<?> viewMagazine(@PathVariable("magazineId") String magazineId){
         try {
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-//            MagazineDto magazineInfo = magazineService.viewMagazine(magazineId);
-////            List<TravelInfoDto> travelInfoDtos = travelService.listTravelInfo(magazineInfo.getTravelId());
-//            TravelDto travelDto = travelService.viewTravel(magazineInfo.getTravelId(), userId);
-//            List<MagazineDetailDto> magazineDetailDtos = magazineService.viewMagazineDetail(magazineId);
-//            MagazineDto magazineDto = new MagazineDto(magazineId, userId, magazineInfo.getTravelId(), magazineInfo.getMagazineTitle(), travelDto, magazineDetailDtos);
             MagazineDto magazineDto = magazineService.viewDetailMagezine(magazineId, userId);
             return new ResponseEntity<MagazineDto>(magazineDto, HttpStatus.OK);
         }catch (Exception e){
