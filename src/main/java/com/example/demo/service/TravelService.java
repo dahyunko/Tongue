@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.model.travel.TmapTravelDto;
 import com.example.demo.model.travel.TravelDto;
+import com.example.demo.model.travel.TravelInfoDto;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface TravelService {
     List<TravelDto> listMyTravel(String userId) throws Exception;
     void duplicateTravel(String travelId, String userId) throws Exception;
 
+    List<TravelInfoDto> listTravelInfo(String travelId) throws Exception;
 }

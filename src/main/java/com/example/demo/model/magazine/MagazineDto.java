@@ -25,5 +25,12 @@ public class MagazineDto {
         this.travelId = travelId;
     }
 
-
+    public MagazineDto(String magazineId, String userId, String travelId, String magazineTitle, List<TravelInfoDto> travelInfoDtoList, List<MagazineDetailDto> magazineDetailDtoList) {
+        this.magazineId = magazineId;
+        this.userId = userId;
+        this.travelId = travelId;
+        this.magazineTitle = magazineTitle;
+        this.travelInfoDtoList = travelInfoDtoList;
+        this.magazineDetailDtoList = magazineDetailDtoList;
+    }
 }
