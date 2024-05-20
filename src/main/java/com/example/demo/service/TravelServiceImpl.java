@@ -136,11 +136,12 @@ public class TravelServiceImpl implements TravelService {
         }
     }
 
+
     @Override
     public List<TravelDto> listMyTravel(String userId) throws Exception {
-        List<TravelDto> travelDtoList = travelMapper.listMyTravel(userId);
+//        List<TravelDto> travelDtoList = travelMapper.listMyTravel(userId);
 
-        return travelDtoList;
+        return travelMapper.listMyTravel(userId);
     }
 
     @Override
@@ -188,6 +189,16 @@ public class TravelServiceImpl implements TravelService {
         return travelDtoList;
     }
 
+
+    @Override
+    public List<TravelInfoDto> listTravelInfo(String travelId) throws Exception {
+        try {
+            return travelInfoMapper.listTravelInfo(travelId);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
 
 
 }
