@@ -26,8 +26,7 @@ public class TravelController {
     public ResponseEntity<?> regist(@RequestBody List<TmapTravelDto> tmapTravelDtos, @RequestParam("travelName") String travelName) throws Exception{
         try{
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            boolean isOwner = true;
-            travelService.registTravel(tmapTravelDtos, travelName, userId, isOwner);
+            travelService.registTravel(tmapTravelDtos, travelName, userId);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
