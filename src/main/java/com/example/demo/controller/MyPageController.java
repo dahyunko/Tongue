@@ -37,7 +37,7 @@ public class MyPageController {
         try {
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 
-            log.info("mypage");
+            log.info("mypage:", userId);
             List<TravelDto> travelInfos = travelService.listMyTravel(userId);
             List<MagazineDto> magazineInfos = magazineService.listMagazine(userId);
             UserDto userInfo = userService.getUserInfo(userId);
@@ -50,6 +50,7 @@ public class MyPageController {
             log.info("mypagedto:", myPageInfo);
             return new ResponseEntity<MyPageDto>(myPageInfo, HttpStatus.OK);
         } catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
     }

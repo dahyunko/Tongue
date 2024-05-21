@@ -138,9 +138,9 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     public List<TravelDto> listMyTravel(String userId) throws Exception {
-        List<TravelDto> travelDtoList = travelMapper.listMyTravel(userId);
-
-        return travelDtoList;
+//        List<TravelDto> travelDtoList = travelMapper.listMyTravel(userId);
+        log.info(userId);
+        return travelMapper.listMyTravel(userId);
     }
 
     @Override
