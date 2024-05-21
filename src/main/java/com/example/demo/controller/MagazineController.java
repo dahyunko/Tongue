@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.magazine.MagazineCommentDto;
 import com.example.demo.model.magazine.MagazineDetailDto;
 import com.example.demo.model.magazine.MagazineDto;
 import com.example.demo.model.travel.TravelDto;
@@ -62,9 +63,31 @@ public class MagazineController {
     @PostMapping("/save/{magazineId}")
     public ResponseEntity<?> saveMagazine(@PathVariable("magazineId") String magazineId, @RequestBody MagazineDto magazineDto){
         try{
-            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
             MagazineDto magazineDtoNew =  magazineService.saveMagazine(magazineDto);
             return new ResponseEntity<MagazineDto>(magazineDtoNew, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping("/comment/{magazineId}")
+    public ResponseEntity<?> newComment(@PathVariable("magazineId") String magazineId, @RequestBody String comment){
+        try{
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            log.info(userId);
+            magazineService.insertComment(magazineId, userId, comment);
+
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/comment/{magazineId}")
+    public ResponseEntity<?> getComment(@PathVariable("magazineId") String magazineId){
+        try{
+            List<MagazineCommentDto> magazineCommentDtos = magazineService.listComment(magazineId);
+            return new ResponseEntity<List<MagazineCommentDto>>(magazineCommentDtos, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
