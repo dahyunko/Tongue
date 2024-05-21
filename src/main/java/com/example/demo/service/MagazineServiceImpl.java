@@ -53,7 +53,7 @@ public class MagazineServiceImpl implements MagazineService {
 
     // 일정 기록하기 눌렀을 때 실행 -> 매거진 디테일 생성하기
     @Override
-    public List<MagazineDetailDto> createMagazineMemo(String userId, String travelId){
+    public String createMagazineMemo(String userId, String travelId){
         try{
             String magazineId = MAGAZINE + generateRandomId();
             MagazineDto magazineDto = new MagazineDto(magazineId, userId, travelId);
@@ -66,7 +66,7 @@ public class MagazineServiceImpl implements MagazineService {
                 magazineDetailMapper.registMagazineDetail(magazineDetailDto);
             }
 //            log.info(magazineId);
-            return magazineDetailMapper.listMagazineDetail(magazineId);
+            return magazineId;
         }catch (Exception e){
             e.printStackTrace();
             throw new IllegalArgumentException();
@@ -90,7 +90,7 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public List<MagazineDetailDto> viewMagazine(String magazine_id) throws Exception {
+    public List<MagazineDetailDto> viewMagazineDetail(String magazine_id) throws Exception {
         try{
             return magazineDetailMapper.listMagazineDetail(magazine_id);
         }catch (Exception e){
@@ -98,6 +98,17 @@ public class MagazineServiceImpl implements MagazineService {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public MagazineDto viewMagazine(String magazineId) throws Exception {
+        try{
+            return magazineMapper.viewMagazine(magazineId);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
 
     @Override
     public List<String> getMagazineIdList(String user_id) throws Exception {
