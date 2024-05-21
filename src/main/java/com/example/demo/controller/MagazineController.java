@@ -52,8 +52,19 @@ public class MagazineController {
     public ResponseEntity<?> viewMagazine(@PathVariable("magazineId") String magazineId){
         try {
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            MagazineDto magazineDto = magazineService.viewDetailMagezine(magazineId, userId);
+            MagazineDto magazineDto = magazineService.viewDetailMagazine(magazineId, userId);
             return new ResponseEntity<MagazineDto>(magazineDto, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping("/save/{magazineId}")
+    public ResponseEntity<?> saveMagazine(@PathVariable("magazineId") String magazineId, @RequestBody MagazineDto magazineDto){
+        try{
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            MagazineDto magazineDtoNew =  magazineService.saveMagazine(magazineDto);
+            return new ResponseEntity<MagazineDto>(magazineDtoNew, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
