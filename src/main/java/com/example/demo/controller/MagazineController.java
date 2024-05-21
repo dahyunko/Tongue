@@ -71,10 +71,10 @@ public class MagazineController {
     }
 
     @PostMapping("/comment/{magazineId}")
-    public ResponseEntity<?> newComment(@PathVariable("magazineId") String magazineId, @RequestBody String comment){
+    public ResponseEntity<?> newComment(@PathVariable("magazineId") String magazineId, @RequestParam("comment") String comment){
         try{
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            log.info(userId);
+            log.info(comment);
             magazineService.insertComment(magazineId, userId, comment);
 
             return new ResponseEntity<Void>(HttpStatus.OK);
