@@ -28,5 +28,14 @@
         where magazine_id = #{magazineId}
     </select>
 
+    <delete id="deleteMagazineDetail" parameterType="string">
+        delete from magazine_detail
+        where magazine_id = #{magazineId}
+    </delete>
 
+    <insert id="createMagazineDetail" parameterType="magazineDetailDto">
+        insert into magazine_detail(magazine_detail_id, magazine_id, travel_info_id, content, img)
+        values (#{magazineDetailId}, #{magazineId}, #{travelInfoId}, #{content}, #{img})
+
+    </insert>
 </mapper>

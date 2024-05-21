@@ -92,6 +92,31 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
+    public MagazineDto saveMagazine(MagazineDto magazineDto) throws Exception {
+        try{
+            String magazineId = magazineDto.getMagazineId();
+            log.info(magazineId);
+            // 매거진 삭제
+            for(MagazineDetailDto magazineDetailDto : magazineDto.getMagazineDetailDtoList()){
+                magazineDetailMapper.deleteMagazineDetail(magazineId);
+            }
+            magazineMapper.deleteMagazine(magazineId);
+
+            //매거진 새로 생성
+            magazineMapper.createMagazine(magazineDto);
+            for(MagazineDetailDto magazineDetailDto: magazineDto.getMagazineDetailDtoList()){
+                magazineDetailMapper.createMagazineDetail(magazineDetailDto);
+            }
+
+            return viewDetailMagazine(magazineId, magazineDto.getUserId());
+
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
     public List<MagazineDetailDto> viewMagazineDetail(String magazine_id) throws Exception {
         try{
             return magazineDetailMapper.listMagazineDetail(magazine_id);
@@ -118,7 +143,7 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public MagazineDto viewDetailMagezine(String magazineId, String userId) throws Exception {
+    public MagazineDto viewDetailMagazine(String magazineId, String userId) throws Exception {
         try{
             List<MagazineDetailDto> magazineDetailDtoList = new ArrayList<>();
             List<MagazineDetailDto> magazineDetailDtos = magazineDetailMapper.listMagazineDetail(magazineId);

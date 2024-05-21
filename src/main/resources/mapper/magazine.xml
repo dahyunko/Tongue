@@ -15,8 +15,8 @@
     </resultMap>
 
     <insert id="createMagazine" parameterType="magazineDto">
-        insert into magazine(magazine_id, user_id, travel_id)
-        values (#{magazineId}, #{userId}, #{travelId})
+        insert into magazine(magazine_id, user_id, travel_id, magazine_title)
+        values (#{magazineId}, #{userId}, #{travelId}, #{magazineTitle})
     </insert>
 
     <select id="viewMagazine" parameterType="string" resultMap="magazine">
@@ -36,4 +36,11 @@
         from magazine
         where user_id = #{userId}
     </select>
+
+    <delete id="deleteMagazine" parameterType="string">
+        delete from magazine
+        where  magazine_id = #{magazineId}
+    </delete>
+
+
 </mapper>
