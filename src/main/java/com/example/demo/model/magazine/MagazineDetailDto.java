@@ -16,6 +16,7 @@ public class MagazineDetailDto {
     private MagazineDto magazineDto;
     private TravelInfoDto travelInfoDto;
     private PlaceDto placeDto;
+    private String placeId;
 
     public MagazineDetailDto(){}
 
@@ -36,6 +37,16 @@ public class MagazineDetailDto {
         this.travelInfoId = travelInfoId;
         this.content = content;
         this.img = img;
+    }
+
+    public MagazineDetailDto(String magazineDetailId, String magazineId, String img, String content, String travelInfoId, TravelInfoDto travelInfoDto, PlaceDto placeDto) {
+        this.magazineDetailId = magazineDetailId;
+        this.magazineId = magazineId;
+        this.img = img;
+        this.content = content;
+        this.travelInfoId = travelInfoId;
+        this.travelInfoDto = travelInfoDto;
+        this.placeDto = placeDto;
     }
 
     @Override

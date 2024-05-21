@@ -13,11 +13,10 @@ public interface MagazineService {
     List<MagazineDetailDto> viewMagazineDetail(String magazine_id) throws Exception;
     MagazineDto viewMagazine(String magazineId) throws Exception;
     List<String> getMagazineIdList(String user_id) throws Exception;
-
-
+    MagazineDto viewDetailMagazine(String magazineId, String userId) throws Exception;
 
     // MagazineDetailMapper
-    List<MagazineDetailDto> registMagazineDetail(List<MagazineDetailDto> magazineDetailDtos) throws Exception;
-    List<MagazineDetailDto> listMagazineDetail(String magazine_id) throws Exception;
+    String registMagazineDetail(MagazineDto magazineDto) throws Exception;
+    MagazineDto saveMagazine(MagazineDto magazineDto) throws Exception;
     List<MagazineDto> listMagazine(String userId) throws Exception;
 }

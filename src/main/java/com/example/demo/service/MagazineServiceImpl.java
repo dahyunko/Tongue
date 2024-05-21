@@ -3,12 +3,14 @@ package com.example.demo.service;
 import com.example.demo.model.magazine.MagazineDetailDto;
 import com.example.demo.model.magazine.MagazineDto;
 import com.example.demo.model.mapper.*;
+import com.example.demo.model.travel.PlaceDto;
 import com.example.demo.model.travel.TravelDto;
 import com.example.demo.model.travel.TravelInfoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -75,14 +77,39 @@ public class MagazineServiceImpl implements MagazineService {
 
     // 매거진 만들기 -> 매거진 업데이트 하고 gemini로 값 넘기기
     @Override
-    public List<MagazineDetailDto> registMagazineDetail(List<MagazineDetailDto> magazineDetailDtos) throws Exception {
+    public String registMagazineDetail(MagazineDto magazineDto) throws Exception {
         try {
-            String magazineId = "";
+            String magazineId = magazineDto.getMagazineId();
+            List<MagazineDetailDto> magazineDetailDtos = magazineDto.getMagazineDetailDtoList();
             for(MagazineDetailDto magazineDetailDto : magazineDetailDtos){
                 magazineDetailMapper.updateMagazineDetail(magazineDetailDto);
-                magazineId = magazineDetailDto.getMagazineId();
             }
-            return magazineDetailMapper.listMagazineDetail(magazineId);
+            return magazineId;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public MagazineDto saveMagazine(MagazineDto magazineDto) throws Exception {
+        try{
+            String magazineId = magazineDto.getMagazineId();
+            log.info(magazineId);
+            // 매거진 삭제
+            for(MagazineDetailDto magazineDetailDto : magazineDto.getMagazineDetailDtoList()){
+                magazineDetailMapper.deleteMagazineDetail(magazineId);
+            }
+            magazineMapper.deleteMagazine(magazineId);
+
+            //매거진 새로 생성
+            magazineMapper.createMagazine(magazineDto);
+            for(MagazineDetailDto magazineDetailDto: magazineDto.getMagazineDetailDtoList()){
+                magazineDetailMapper.createMagazineDetail(magazineDetailDto);
+            }
+
+            return viewDetailMagazine(magazineId, magazineDto.getUserId());
+
         }catch (Exception e){
             e.printStackTrace();
             throw new IllegalArgumentException();
@@ -116,9 +143,40 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public List<MagazineDetailDto> listMagazineDetail(String magazine_id) throws Exception {
-        return null;
+    public MagazineDto viewDetailMagazine(String magazineId, String userId) throws Exception {
+        try{
+            List<MagazineDetailDto> magazineDetailDtoList = new ArrayList<>();
+            List<MagazineDetailDto> magazineDetailDtos = magazineDetailMapper.listMagazineDetail(magazineId);
+
+            for (MagazineDetailDto magazineDetailDto : magazineDetailDtos){
+                TravelInfoDto travelInfoDto = travelInfoMapper.viewTravelInfo(magazineDetailDto.getTravelInfoId());
+
+                PlaceDto placeDto = placeMapper.viewPlace(travelInfoDto.getPlaceId());
+                magazineDetailDtoList.add(new MagazineDetailDto(
+                        magazineDetailDto.getMagazineDetailId(),
+                        magazineId,
+                        magazineDetailDto.getImg(),
+                        magazineDetailDto.getContent(),
+                        magazineDetailDto.getTravelInfoId(),
+                        travelInfoDto,
+                        placeDto
+                ));
+            }
+                MagazineDto magazineDto = magazineMapper.viewMagazine(magazineId);
+                return new MagazineDto(
+                        magazineId,
+                        userId,
+                        magazineDto.getTravelId(),
+                        magazineDto.getMagazineTitle(),
+                        magazineDetailDtoList
+                );
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
     }
+
+
 
     @Override
     public List<MagazineDto> listMagazine(String userId) throws Exception {

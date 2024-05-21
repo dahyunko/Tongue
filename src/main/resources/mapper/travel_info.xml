@@ -21,6 +21,12 @@
         where travel_id = #{travelId}
     </select>
 
+    <select id="viewTravelInfo" parameterType="string" resultMap="travel_info">
+        select travel_info_id, travel_id, day, order_num, place_id
+        from travel_info
+        where travel_info_id = #{travelInfoId}
+    </select>
+
     <delete id="deleteTravelInfoList" parameterType="string">
         delete from travel_info
         where travel_id = #{travelId}

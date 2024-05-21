@@ -11,4 +11,5 @@ public interface MagazineMapper {
     MagazineDto viewMagazine(String magazine_id) throws Exception;
     List<String> getMagazineIdList(String userId) throws Exception;
     List<MagazineDto> getMagazineList(String userId) throws Exception;
+    void deleteMagazine(String magazineId) throws Exception;
 }

@@ -188,7 +188,6 @@ public class TravelServiceImpl implements TravelService {
         return travelDtoList;
     }
 
-
     @Override
     public List<TravelInfoDto> listTravelInfo(String travelId) throws Exception {
         try {
@@ -198,6 +197,7 @@ public class TravelServiceImpl implements TravelService {
             throw new IllegalArgumentException();
         }
     }
+
 
 
 }

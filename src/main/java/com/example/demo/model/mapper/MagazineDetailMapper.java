@@ -8,7 +8,8 @@ import java.util.List;
 @Mapper
 public interface MagazineDetailMapper {
     void registMagazineDetail(MagazineDetailDto magazineDetailDto) throws Exception;
+    void createMagazineDetail(MagazineDetailDto magazineDetailDto) throws Exception;
     void updateMagazineDetail(MagazineDetailDto magazineDetailDto) throws Exception;
     List<MagazineDetailDto> listMagazineDetail(String magazineId) throws Exception;
-
+    void deleteMagazineDetail(String magazineDetailId) throws Exception;
 }
