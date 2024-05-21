@@ -39,7 +39,7 @@ public class MagazineController {
     }
 
     @PostMapping("/{magazineId}")
-    public ResponseEntity<?> generateMagazine(@PathVariable("magazineId") String magazineId, @RequestBody MagazineDto magazineDto){
+    public ResponseEntity<?> generateMagazine(@PathVariable("magazgineId") String magazineId, @RequestBody MagazineDto magazineDto){
         try{
             magazineService.registMagazineDetail(magazineDto);
             return new ResponseEntity<String>(magazineId, HttpStatus.OK);
