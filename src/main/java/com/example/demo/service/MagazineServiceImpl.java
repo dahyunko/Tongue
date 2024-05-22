@@ -153,6 +153,36 @@ public class MagazineServiceImpl implements MagazineService {
         }
     }
 
+    @Override
+    public List<MagazineDto> getAllMagazine() throws Exception {
+        try{
+            return magazineMapper.getAllMagazine();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public List<MagazineDto> getHotMagazine() throws Exception {
+        try{
+            return magazineMapper.getHotMagazine();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public List<MagazineDto> getNewMagazine() throws Exception {
+        try{
+            return magazineMapper.getNewMagazine();
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
 
     @Override
     public List<MagazineDetailDto> viewMagazineDetail(String magazine_id) throws Exception {

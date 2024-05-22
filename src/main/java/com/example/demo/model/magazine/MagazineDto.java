@@ -15,6 +15,8 @@ public class MagazineDto {
     private int reuseCnt;
     private int magazineHit;
     private int magazineLike;
+    private int registTime;
+    private String coverImg;
     private TravelDto travelDto;
     private List<TravelInfoDto> travelInfoDtoList;
     private List<MagazineDetailDto> magazineDetailDtoList;
