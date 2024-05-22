@@ -105,6 +105,7 @@ public class MagazineServiceImpl implements MagazineService {
             //매거진 새로 생성
             magazineMapper.createMagazine(magazineDto);
             for(MagazineDetailDto magazineDetailDto: magazineDto.getMagazineDetailDtoList()){
+                log.info(magazineDetailDto.getMagazineId());
                 magazineDetailMapper.createMagazineDetail(magazineDetailDto);
             }
 
