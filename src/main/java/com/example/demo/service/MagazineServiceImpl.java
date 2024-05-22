@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.model.magazine.MagazineCommentDto;
 import com.example.demo.model.magazine.MagazineDetailDto;
 import com.example.demo.model.magazine.MagazineDto;
 import com.example.demo.model.mapper.*;
@@ -23,19 +24,22 @@ public class MagazineServiceImpl implements MagazineService {
     private final TravelMapper travelMapper;
     private final TravelInfoMapper travelInfoMapper;
     private final PlaceMapper placeMapper;
+    private final MagazineCommentMapper magazineCommentMapper;
 
     private static String PLACE = "place";
     private static String TRAVEL = "travel";
     private static String TRAVELINFO = "travelinfo";
     private static String MAGAZINE = "magazine";
     private static String MAGAZINEDETAIL = "magazinedetail";
+    private static String MAGAZINECOMMENT = "magazinecomment";
 
-    public MagazineServiceImpl(MagazineMapper magazineMapper, MagazineDetailMapper magazineDetailMapper, TravelMapper travelMapper, TravelInfoMapper travelInfoMapper, PlaceMapper placeMapper) {
+    public MagazineServiceImpl(MagazineMapper magazineMapper, MagazineDetailMapper magazineDetailMapper, TravelMapper travelMapper, TravelInfoMapper travelInfoMapper, PlaceMapper placeMapper, MagazineCommentMapper magazineCommentMapper) {
         this.magazineMapper = magazineMapper;
         this.magazineDetailMapper = magazineDetailMapper;
         this.travelMapper = travelMapper;
         this.travelInfoMapper = travelInfoMapper;
         this.placeMapper = placeMapper;
+        this.magazineCommentMapper = magazineCommentMapper;
     }
 
     private static String generateRandomId(){
@@ -188,4 +192,30 @@ public class MagazineServiceImpl implements MagazineService {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public void insertComment(String magazineId, String userId, String comment) throws Exception {
+        try{
+            String commentId = MAGAZINECOMMENT+generateRandomId();
+            log.info(commentId);
+            log.info("comment: "+comment);
+            MagazineCommentDto magazineCommentDto = new MagazineCommentDto(commentId, magazineId, userId, comment);
+            magazineCommentMapper.insertComment(magazineCommentDto);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public List<MagazineCommentDto> listComment(String magazineId) throws Exception {
+        try{
+            return magazineCommentMapper.getComment(magazineId);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+
 }
