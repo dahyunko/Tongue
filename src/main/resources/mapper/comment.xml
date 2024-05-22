@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.model.mapper.MagazineCommentMapper">
+    <resultMap id="commentDto" type="magazineCommentDto">
+        <result column="comment_id" property="commentId"/>
+        <result column="magazine_id" property="magazineId"/>
+        <result column="user_id" property="userId"/>
+        <result column="comment" property="comment"/>
+        <result column="regist_time" property="registTime"/>
+    </resultMap>
+
+    <insert id="insertComment" parameterType="magazineCommentDto">
+        insert into magazine_comment(comment_id, magazine_id, user_id, comment, regist_time)
+        values (#{commentId}, #{magazineId}, #{userId}, #{comment}, now())
+    </insert>
+
+    <select id="getComment" parameterType="string" resultMap="commentDto">
+        select comment_id, magazine_id, user_id, comment, regist_time
+        from magazine_comment
+        where magazine_id = #{magazineId}
+        order by regist_time
+    </select>
+</mapper>

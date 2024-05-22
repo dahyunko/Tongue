@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
+import com.example.demo.model.magazine.MagazineCommentDto;
 import com.example.demo.model.magazine.MagazineDetailDto;
 import com.example.demo.model.magazine.MagazineDto;
+import com.example.demo.model.mapper.MagazineCommentMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,4 +21,8 @@ public interface MagazineService {
     String registMagazineDetail(MagazineDto magazineDto) throws Exception;
     MagazineDto saveMagazine(MagazineDto magazineDto) throws Exception;
     List<MagazineDto> listMagazine(String userId) throws Exception;
+
+    // MagazineCommentMapper
+    void insertComment(String magazineId, String userId, String comment) throws Exception;
+    List<MagazineCommentDto> listComment(String magazineId) throws Exception;
 }
