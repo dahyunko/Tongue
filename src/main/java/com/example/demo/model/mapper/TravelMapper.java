@@ -17,6 +17,6 @@ public interface TravelMapper {
     List<TravelDto> listMyTravel(String userId) throws Exception;
     void updateTravel(TravelDto travelDto);
     void deleteTravel(String travelId, String userId);
-
+    List<String> checkTravelId(String userId, String travelId) throws Exception;
     List<String> getTravelIdList() throws Exception;
 }

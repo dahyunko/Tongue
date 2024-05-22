@@ -22,4 +22,15 @@
         where magazine_id = #{magazineId}
         order by regist_time
     </select>
+
+    <select id="listCommentId" parameterType="string" resultType="string">
+        select comment_id
+        from magazine_comment
+        where magazine_id=#{magazineId}
+    </select>
+
+    <delete id="deleteComment" parameterType="string">
+        delete from magazine_comment
+        where comment_id = #{commentId}
+    </delete>
 </mapper>

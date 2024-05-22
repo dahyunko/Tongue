@@ -136,6 +136,12 @@ public class TravelServiceImpl implements TravelService {
         }
     }
 
+    @Override
+    public List<String> checkTravelId(String userId, String travelId) throws Exception {
+
+        return travelMapper.checkTravelId(userId, travelId);
+    }
+
 
     @Override
     public List<TravelDto> listMyTravel(String userId) throws Exception {

@@ -42,5 +42,15 @@
         where  magazine_id = #{magazineId}
     </delete>
 
+    <select id="checkMagazine" parameterType="string" resultType="string">
+        select magazine_id
+        from magazine
+        where travel_id = #{travelId};
+    </select>
 
+    <update id="updateHit" parameterType="string">
+        update magazine
+        set magazine_hit = magazine_hit+1
+        where magazine_id = #{magazineId}
+    </update>
 </mapper>

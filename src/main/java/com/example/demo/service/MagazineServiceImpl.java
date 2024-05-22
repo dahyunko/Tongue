@@ -121,6 +121,39 @@ public class MagazineServiceImpl implements MagazineService {
         }
     }
 
+
+    @Override
+    public void deleteMagazine(String magazineId) throws Exception {
+        try{
+            magazineDetailMapper.deleteMagazineDetail(magazineId);
+            magazineMapper.deleteMagazine(magazineId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public void deleteMagazineDetail(String magazineId) throws Exception {
+        try {
+            magazineDetailMapper.deleteMagazineDetail(magazineId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public void updateMagazineHit(String magazineId) throws Exception {
+        try{
+            magazineMapper.updateHit(magazineId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+
     @Override
     public List<MagazineDetailDto> viewMagazineDetail(String magazine_id) throws Exception {
         try{
@@ -186,6 +219,16 @@ public class MagazineServiceImpl implements MagazineService {
         }
     }
 
+    @Override
+    public  List<String> checkMagazine(String travelId) throws Exception {
+        try{
+            List<String> magazineIds = magazineMapper.checkMagazine(travelId);
+            return magazineIds;
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
 
 
     @Override
@@ -217,6 +260,29 @@ public class MagazineServiceImpl implements MagazineService {
         try{
             return magazineCommentMapper.getComment(magazineId);
         } catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public List<String> listCommentId(String magazineId) throws Exception {
+        try{
+            return magazineCommentMapper.listCommentId(magazineId);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public void deleteCommentAll(String magazineId) throws Exception {
+        try{
+            List<String> commentIds = magazineCommentMapper.listCommentId(magazineId);
+            for(String commentId:commentIds){
+                magazineCommentMapper.deleteComment(commentId);
+            }
+        }catch (Exception e){
             e.printStackTrace();
             throw new IllegalArgumentException();
         }

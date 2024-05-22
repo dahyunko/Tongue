@@ -2,11 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.travel.TmapTravelDto;
 import com.example.demo.model.travel.TravelDto;
+import com.example.demo.service.MagazineService;
 import com.example.demo.service.TravelService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -17,9 +19,10 @@ import java.util.List;
 @RequestMapping("/travel")
 public class TravelController {
     private TravelService travelService;
-
-    public TravelController(TravelService travelService) {
+    private MagazineService magazineService;
+    public TravelController(TravelService travelService, MagazineService magazineService) {
         this.travelService = travelService;
+        this.magazineService = magazineService;
     }
 
     @PostMapping("/regist")
@@ -55,6 +58,18 @@ public class TravelController {
         }
     }
 
+    @GetMapping("/check/{travelId}")
+    public ResponseEntity<?> duplicateCheck(@PathVariable("travelId") String travelId) throws Exception{
+        try{
+            String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
+
+            List<String> travelIds = travelService.checkTravelId(userId, travelId);
+            return new ResponseEntity<List<String>>(travelIds, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
     // 여행 복사
     @GetMapping("/duplicate/{travelId}")
     public ResponseEntity<?> duplicateTravel(@PathVariable("travelId") String travelId, @RequestParam("magazineId") String MagazineId ) throws Exception{
@@ -62,7 +77,7 @@ public class TravelController {
             String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
             travelService.duplicateTravel(travelId, userId);
             // hit 올리기
-            // magazineService.updateHit(MagazineId);
+             magazineService.updateMagazineHit(MagazineId);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
@@ -87,6 +102,16 @@ public class TravelController {
     public ResponseEntity<?> deleteTravel(@PathVariable("travelId") String travelId){
         try{
             String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
+            List<String> magazineIds = magazineService.checkMagazine(travelId);
+            for (String magazineId:magazineIds){
+                magazineService.deleteCommentAll(magazineId);
+            }
+            for(String magazineId : magazineIds){
+                magazineService.deleteMagazineDetail(magazineId);
+            }
+            for(String magazineId : magazineIds){
+                magazineService.deleteMagazine(magazineId);
+            }
             travelService.deleteTravel(travelId, userId);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }catch (Exception e){

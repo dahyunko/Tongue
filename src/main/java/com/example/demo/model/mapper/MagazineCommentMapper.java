@@ -9,4 +9,6 @@ import java.util.List;
 public interface MagazineCommentMapper {
     void insertComment(MagazineCommentDto magazineCommentDto) throws Exception;
     List<MagazineCommentDto> getComment(String magazineId) throws Exception;
+    List<String> listCommentId(String magazineId) throws Exception;
+    void deleteComment(String commentId) throws Exception;
 }

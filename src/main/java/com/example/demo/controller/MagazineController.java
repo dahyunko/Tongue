@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.interfaces.RSAKey;
 import java.util.List;
 
 @Slf4j
@@ -69,6 +70,29 @@ public class MagazineController {
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @GetMapping("/delete/{magazineId}")
+    public ResponseEntity<?> deleteMagazine(@PathVariable("magazineId") String magazineId){
+        try{
+            magazineService.deleteCommentAll(magazineId);
+            magazineService.deleteMagazineDetail(magazineId);
+            magazineService.deleteMagazine(magazineId);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/check/{travelId}")
+    public ResponseEntity<?> checkMagazine(@PathVariable("travelId") String travelId){
+        try{
+            List<String> existMagazine = magazineService.checkMagazine(travelId);
+            return new ResponseEntity<List<String>>(existMagazine, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
 
     @PostMapping("/comment/{magazineId}")
     public ResponseEntity<?> newComment(@PathVariable("magazineId") String magazineId, @RequestParam("comment") String comment){

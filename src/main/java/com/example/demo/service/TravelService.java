@@ -15,6 +15,7 @@ public interface TravelService {
     void deleteTravel(String travelId, String userId) throws Exception;
     List<TravelDto> listMyTravel(String userId) throws Exception;
     void duplicateTravel(String travelId, String userId) throws Exception;
+    List<String> checkTravelId(String userId, String travelId) throws Exception;
 
     List<TravelInfoDto> listTravelInfo(String travelId) throws Exception;
 }

@@ -38,4 +38,9 @@
         where travel_id = #{travelId} and user_id=#{userId}
     </delete>
 
+    <select id="checkTravelId" parameterType="string">
+        select travel_id
+        from travels
+        where travel_id = #{travelId} and user_id=#{userId}
+    </select>
 </mapper>

@@ -16,7 +16,10 @@ public interface MagazineService {
     MagazineDto viewMagazine(String magazineId) throws Exception;
     List<String> getMagazineIdList(String user_id) throws Exception;
     MagazineDto viewDetailMagazine(String magazineId, String userId) throws Exception;
-
+    List<String> checkMagazine(String travelId) throws Exception;
+    void deleteMagazine(String magazineId) throws Exception;
+    void deleteMagazineDetail(String magazineId) throws Exception;
+    void updateMagazineHit(String magazineId) throws Exception;
     // MagazineDetailMapper
     String registMagazineDetail(MagazineDto magazineDto) throws Exception;
     MagazineDto saveMagazine(MagazineDto magazineDto) throws Exception;
@@ -25,4 +28,6 @@ public interface MagazineService {
     // MagazineCommentMapper
     void insertComment(String magazineId, String userId, String comment) throws Exception;
     List<MagazineCommentDto> listComment(String magazineId) throws Exception;
+    List<String> listCommentId(String magazineId) throws Exception;
+    void deleteCommentAll(String magazineId) throws Exception;
 }
