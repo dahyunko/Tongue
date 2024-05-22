@@ -57,10 +57,12 @@ public class TravelController {
 
     // 여행 복사
     @GetMapping("/duplicate/{travelId}")
-    public ResponseEntity<?> duplicateTravel(@PathVariable("travelId") String travelId) throws Exception{
+    public ResponseEntity<?> duplicateTravel(@PathVariable("travelId") String travelId, @RequestParam("magazineId") String MagazineId ) throws Exception{
         try{
             String userId =  SecurityContextHolder.getContext().getAuthentication().getName();
             travelService.duplicateTravel(travelId, userId);
+            // hit 올리기
+            // magazineService.updateHit(MagazineId);
             return new ResponseEntity<Void>(HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
