@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -55,5 +56,20 @@ public class MyPageController {
         }
     }
 
+    @GetMapping("/magazine")
+    public ResponseEntity<?> getMagazineList() throws Exception{
+        try{
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            List<MagazineDto> magazineDtoList = new ArrayList<>();
+            List<String> magazineIdList = magazineService.getMagazineIdList(userId);
+            for (String magazineId:magazineIdList){
+                magazineDtoList.add(magazineService.viewDetailMagazine(magazineId, userId));
+            }
+            return new ResponseEntity<List<MagazineDto>>(magazineDtoList, HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 
 }

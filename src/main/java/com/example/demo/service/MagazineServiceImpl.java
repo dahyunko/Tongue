@@ -144,7 +144,12 @@ public class MagazineServiceImpl implements MagazineService {
 
     @Override
     public List<String> getMagazineIdList(String user_id) throws Exception {
-        return null;
+        try{
+            return magazineMapper.getMagazineIdList(user_id);
+        }catch (Exception e){
+            e.printStackTrace();
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
