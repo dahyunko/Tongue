@@ -12,15 +12,17 @@
         <result column="reuse_cnt" property="reuseCnt"/>
         <result column="magazine_hit" property="magazineHit"/>
         <result column="magazine_like" property="magazineLike"/>
+        <result column="regist_time" property="registTime"/>
+        <result column="cover_img" property="coverImg"/>
     </resultMap>
 
     <insert id="createMagazine" parameterType="magazineDto">
-        insert into magazine(magazine_id, user_id, travel_id, magazine_title)
-        values (#{magazineId}, #{userId}, #{travelId}, #{magazineTitle})
+        insert into magazine(magazine_id, user_id, travel_id, magazine_title, regist_time, cover_img)
+        values (#{magazineId}, #{userId}, #{travelId}, #{magazineTitle}, now(), #{coverImg})
     </insert>
 
     <select id="viewMagazine" parameterType="string" resultMap="magazine">
-        select magazine_id, user_id, travel_id, magazine_title
+        select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like, cover_img
         from magazine
         where magazine_id = #{magazineId}
     </select>
@@ -32,7 +34,7 @@
     </select>
 
     <select id="getMagazineList" parameterType="string" resultMap="magazine">
-        select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like
+        select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like, cover_img
         from magazine
         where user_id = #{userId}
     </select>
@@ -53,4 +55,22 @@
         set magazine_hit = magazine_hit+1
         where magazine_id = #{magazineId}
     </update>
+
+    <select id="getAllMagazine" resultMap="magazine">
+        select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like, cover_img
+        from magazine
+    </select>
+    <select id="getHotMagazine" resultMap="magazine">
+        select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like, cover_img
+        from magazine
+        order by magazine_hit
+        limit 4
+    </select>
+    <select id="getNewMagazine" resultMap="magazine">
+        select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like, cover_img
+        from magazine
+        order by regist_time
+        limit 4
+    </select>
+
 </mapper>

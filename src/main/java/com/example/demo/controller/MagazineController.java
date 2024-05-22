@@ -51,7 +51,7 @@ public class MagazineController {
     }
 
     @GetMapping("/{magazineId}")
-    public ResponseEntity<?> viewMagazine(@PathVariable("magazineId") String magazineId){
+    public ResponseEntity<?> viewDetailMagazine(@PathVariable("magazineId") String magazineId){
         try {
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
             MagazineDto magazineDto = magazineService.viewDetailMagazine(magazineId, userId);
@@ -82,6 +82,40 @@ public class MagazineController {
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @GetMapping("/view/all")
+    public ResponseEntity<?> viewAllMagazine(){
+        try {
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            List<MagazineDto> magazineDtos = magazineService.getAllMagazine();
+            return new ResponseEntity<List<MagazineDto>>(magazineDtos, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/view/hot")
+    public ResponseEntity<?> viewHotMagazine(){
+        try {
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            List<MagazineDto> magazineDtos = magazineService.getHotMagazine();
+            return new ResponseEntity<List<MagazineDto>>(magazineDtos, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/view/new")
+    public ResponseEntity<?> viewNewMagazine(){
+        try {
+            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
+            List<MagazineDto> magazineDtos = magazineService.getNewMagazine();
+            return new ResponseEntity<List<MagazineDto>>(magazineDtos, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
 
     @GetMapping("/check/{travelId}")
     public ResponseEntity<?> checkMagazine(@PathVariable("travelId") String travelId){

@@ -20,6 +20,10 @@ public interface MagazineService {
     void deleteMagazine(String magazineId) throws Exception;
     void deleteMagazineDetail(String magazineId) throws Exception;
     void updateMagazineHit(String magazineId) throws Exception;
+    List<MagazineDto> getAllMagazine() throws Exception;
+    List<MagazineDto> getHotMagazine() throws Exception;
+    List<MagazineDto> getNewMagazine() throws Exception;
+
     // MagazineDetailMapper
     String registMagazineDetail(MagazineDto magazineDto) throws Exception;
     MagazineDto saveMagazine(MagazineDto magazineDto) throws Exception;

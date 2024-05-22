@@ -1,5 +1,6 @@
 package com.example.demo.model.mapper;
 
+import com.example.demo.model.magazine.MagazineDetailDto;
 import com.example.demo.model.magazine.MagazineDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,4 +15,7 @@ public interface MagazineMapper {
     void deleteMagazine(String magazineId) throws Exception;
     List<String> checkMagazine(String travelId) throws Exception;
     void updateHit(String magazineId) throws Exception;
+    List<MagazineDto> getAllMagazine() throws Exception;
+    List<MagazineDto> getHotMagazine() throws Exception;
+    List<MagazineDto> getNewMagazine() throws Exception;
 }

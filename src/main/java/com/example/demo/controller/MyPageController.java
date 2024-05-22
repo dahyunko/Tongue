@@ -63,7 +63,7 @@ public class MyPageController {
             List<MagazineDto> magazineDtoList = new ArrayList<>();
             List<String> magazineIdList = magazineService.getMagazineIdList(userId);
             for (String magazineId:magazineIdList){
-                magazineDtoList.add(magazineService.viewDetailMagazine(magazineId, userId));
+                magazineDtoList.add(magazineService.viewMagazine(magazineId));
             }
             return new ResponseEntity<List<MagazineDto>>(magazineDtoList, HttpStatus.OK);
         }catch (Exception e){
