@@ -63,13 +63,13 @@
     <select id="getHotMagazine" resultMap="magazine">
         select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like, cover_img
         from magazine
-        order by magazine_hit
+        order by magazine_hit desc
         limit 4
     </select>
     <select id="getNewMagazine" resultMap="magazine">
         select magazine_id, user_id, travel_id, magazine_title, reuse_cnt, magazine_hit, magazine_like, cover_img
         from magazine
-        order by regist_time
+        order by regist_time desc
         limit 4
     </select>
 

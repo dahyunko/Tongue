@@ -53,8 +53,7 @@ public class MagazineController {
     @GetMapping("/{magazineId}")
     public ResponseEntity<?> viewDetailMagazine(@PathVariable("magazineId") String magazineId){
         try {
-            String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-            MagazineDto magazineDto = magazineService.viewDetailMagazine(magazineId, userId);
+            MagazineDto magazineDto = magazineService.viewDetailMagazine(magazineId);
             return new ResponseEntity<MagazineDto>(magazineDto, HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);

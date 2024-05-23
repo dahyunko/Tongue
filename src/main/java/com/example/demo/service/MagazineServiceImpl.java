@@ -113,7 +113,7 @@ public class MagazineServiceImpl implements MagazineService {
                 magazineDetailMapper.createMagazineDetail(magazineDetailDto);
             }
 
-            return viewDetailMagazine(magazineId, magazineDto.getUserId());
+            return viewDetailMagazine(magazineId);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -216,7 +216,7 @@ public class MagazineServiceImpl implements MagazineService {
     }
 
     @Override
-    public MagazineDto viewDetailMagazine(String magazineId, String userId) throws Exception {
+    public MagazineDto viewDetailMagazine(String magazineId) throws Exception {
         try{
             List<MagazineDetailDto> magazineDetailDtoList = new ArrayList<>();
             List<MagazineDetailDto> magazineDetailDtos = magazineDetailMapper.listMagazineDetail(magazineId);
@@ -238,7 +238,7 @@ public class MagazineServiceImpl implements MagazineService {
                 MagazineDto magazineDto = magazineMapper.viewMagazine(magazineId);
                 return new MagazineDto(
                         magazineId,
-                        userId,
+                        magazineDto.getUserId(),
                         magazineDto.getTravelId(),
                         magazineDto.getMagazineTitle(),
                         magazineDetailDtoList

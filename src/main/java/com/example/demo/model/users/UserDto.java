@@ -12,6 +12,7 @@ public class UserDto {
     private String userAddress;
     private String userBirth;
     private UserRole role;
+    private String profileImg;
 
     public UserDto(){
 
@@ -24,6 +25,15 @@ public class UserDto {
         this.userAddress = userAddress;
         this.userBirth = userBirth;
         this.role = role;
+    }
+    public UserDto(String userId, String userName, String userPassword, String userAddress, String userBirth, UserRole role, String profileImg) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userAddress = userAddress;
+        this.userBirth = userBirth;
+        this.role = role;
+        this.profileImg=profileImg;
     }
 
     public UserDto(String username, String userPassword, UserRole role) {

@@ -15,7 +15,7 @@ public interface MagazineService {
     List<MagazineDetailDto> viewMagazineDetail(String magazine_id) throws Exception;
     MagazineDto viewMagazine(String magazineId) throws Exception;
     List<String> getMagazineIdList(String user_id) throws Exception;
-    MagazineDto viewDetailMagazine(String magazineId, String userId) throws Exception;
+    MagazineDto viewDetailMagazine(String magazineId) throws Exception;
     List<String> checkMagazine(String travelId) throws Exception;
     void deleteMagazine(String magazineId) throws Exception;
     void deleteMagazineDetail(String magazineId) throws Exception;

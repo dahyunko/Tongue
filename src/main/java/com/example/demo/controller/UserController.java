@@ -66,7 +66,7 @@ public class UserController {
         try{
             String userId = SecurityContextHolder.getContext().getAuthentication().getName();
             UserDto userInfo = userService.getUserInfo(userId);
-            return new ResponseEntity<String>(userInfo.getUserName(), HttpStatus.OK);
+            return new ResponseEntity<String>(userInfo.getUserId(), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
