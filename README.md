@@ -4,18 +4,17 @@
 ⚡ 2024.03 ~ 2024.06
 ```
 
-&nbsp;&nbsp; <strong>Tongue: </strong> 
+&nbsp;&nbsp; **Tongue:**
 LLM을 활용한 여행 계획부터 기록, 공유까지 전반을 아우르는 통합 여행 플랫폼
 <br />
-
-&nbsp;&nbsp;⭐ Docker image, Github Actions CI/CD 구축, EC2 배포<br />
-<br />
+- [Docker image, Github Actions CI/CD 구축, EC2 배포](https://github.com/dahyunko/Tongue/edit/master/README.md#1-docker-github-cicd-%EA%B5%AC%EC%B6%95-)
+- [Spring Security & jwt 사용자 인증, 인가](https://github.com/dahyunko/Tongue/edit/master/README.md#2-spring-security--jwt-%EC%82%AC%EC%9A%A9%EC%9E%90-%EC%9D%B8%EC%A6%9D-%EC%9D%B8%EA%B0%80-)
 
 ## Using Stacks <br/>
 ```git
 📌 Springboot, MyBatis, Maven, MYSQL, Docker, Github Actions
 ```
-&nbsp;&nbsp;⭐ <strong>System Architecture & ERD</strong> <br />
+&nbsp;&nbsp;<strong>System Architecture & ERD</strong> <br />
 <div align="center">
       <img src="https://github.com/dahyunko/Tongue/assets/101400650/4830c7db-6dd6-44e2-99c3-873d78855096" width="600" >
       <br/><strong>System Architecture</strong><br/></br>
