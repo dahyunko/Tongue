@@ -77,4 +77,6 @@ SpringBoot Maven 프로젝트를 docker 이미지로 DockerHub에 배포한 후 
           return source;
       }
   ```
-
+  
+- **결과 화면**
+  ![jwt 확인](https://github.com/TongueTripVogue/Tongue_Back/assets/101400650/dde07273-6dfc-4b04-b086-c58f3b8740fd)
