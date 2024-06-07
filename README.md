@@ -8,12 +8,12 @@
 LLM을 활용한 여행 계획부터 기록, 공유까지 전반을 아우르는 통합 여행 플랫폼
 <br />
 
-&nbsp;&nbsp;⭐ Docker image, Github Action CI/CD 구축, EC2 배포<br />
+&nbsp;&nbsp;⭐ Docker image, Github Actions CI/CD 구축, EC2 배포<br />
 <br />
 
 ## Using Stacks <br/>
 ```git
-📌 Springboot, MyBatis, Maven, MYSQL, Docker, Github Action
+📌 Springboot, MyBatis, Maven, MYSQL, Docker, Github Actions
 ```
 &nbsp;&nbsp;⭐ <strong>System Architecture & ERD</strong> <br />
 <div align="center">
@@ -25,28 +25,57 @@ LLM을 활용한 여행 계획부터 기록, 공유까지 전반을 아우르는
 
 <br />
 
-## 1. Docker, GitHub CICD 구축 <br/>
+## 1. Docker, GitHub CI/CD 구축 <br/>
 ```git
-📌 
+📌 Docker, GitHub Actions, AWS
 ```
-&nbsp;&nbsp;⭐ 나와 기업가치관 추천 작업 <br />
-&nbsp;&nbsp;⭐ <strong>sort</strong> 사용하여 사용자의 5가지 가치관(grow, profit, stable, scale, pay)과 유사한 5개의 기업 추천 알고리즘 <br />
-&nbsp;&nbsp;⭐ 해당 기업의 관련 공고 제공 <br />
-</br>
-<div align="center">
-      <img src="https://github.com/oyr-driver/react_google/assets/101400650/255df0f8-57e3-46ac-8476-37ec94d2956b" width="600" >
-      <p>[기업 추천 알고리즘]</p></br>
-      <img src="https://github.com/oyr-driver/react_google/assets/101400650/27cf93c2-0078-46c9-a93a-d7119b145218" width="900" >
-      <p>[PostMan이용 기업 5곳 확인]</p>
-</div>
-  </br></br>
-<div align="left">
-  &nbsp;&nbsp;⭐ 실제 제공 화면 <br />
-</div>
-<br />
-<div align="center">
-      <img src="https://github.com/ITcareerfit/FRONT/assets/96722691/698ceb8a-cc29-4077-a436-bece677c008c"  width="800" >
-      <img src="https://github.com/ITcareerfit/FRONT/assets/96722691/d5c076ac-8de0-407f-8e75-fc1627f6d10c"  width="800" >
-      <img src="https://github.com/ITcareerfit/FRONT/assets/96722691/8ce55e74-2219-4e88-a1f0-456d2d79bb24"  width="800" >
-  </div>
-<br />
+> springboot, Docker CICD 구축하여 AWS 배포 과정 : [dahyunko#2](https://github.com/dahyunko/Tongue/issues/2)
+
+SpringBoot Maven 프로젝트를 docker 이미지로 DockerHub에 배포한 후 GitHub Actions maven.yml 파일에 build, depoly 코드를 설정하여 `master branch`에서 `git push`를 실행할 시 EC2 서버 접근하여 서버를 배포하였습니다.
+- **CI/CD**
+  - CI(Continuous Integration) : `master branch push`가 진행될 때마다 자동으로 빌드, 테스트가 실행되도록 설정하여 문제가 조기에 발견되도록 함
+  - CD(Continuous Deployment) : CI가 완료되면 새로운 이미지를 자동으로 EC2에 배포
+
+- **이루고자 한 목표**
+  1. 배포 자동화
+  2. 일관된 환경 유지
+  3. 지속적인 통합 및 배포
+  4. 확장성   
+
+
+## 2. Spring Security & jwt 사용자 인증, 인가 <br/>
+```git
+📌 Spring Security, jwt
+```
+> Spring Security 설정을 구성하여 JWT를 사용한 인증 및 인가를 처리합니다.
+
+다양한 경로에 대한 접근 권한을 설정하고, JWT 필터를 적용하여 세션 없이 보안 관리를 수행합니다. 또한, CORS 설정을 통해 혀용된 주소에 한하여 접근을 허용합니다. BCryptPasswordEncoder를 사용하여 비밀번호를 암호화하였습니다.
+
+- **경로별 접근 권한 설정**
+  ``` JAVA
+        http.authorizeHttpRequests((auth)-> auth
+              .requestMatchers("/user/**", "/login", "/").permitAll()
+              .requestMatchers("/travel/**", "/user/**", "/board/**", "/mypage/**", "/magazine/**", "/magazine/comment/**").hasAuthority(String.valueOf(UserRole.USER))
+              .requestMatchers("/travel/**").hasAnyRole(UserRole.USER.name(), UserRole.ADMIN.name())
+              .anyRequest().authenticated()
+      );
+  ```
+
+- **CORS 설정**
+  ``` JAVA
+      @Bean
+      public CorsConfigurationSource corsConfigurationSource() {
+          CorsConfiguration configuration = new CorsConfiguration();
+          configuration.addAllowedOriginPattern("*");
+          configuration.addAllowedHeader("*");
+          configuration.addAllowedMethod("*");
+          configuration.setAllowCredentials(true);
+          configuration.setMaxAge(3600L);
+          configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+      
+          UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+          source.registerCorsConfiguration("/**", configuration);
+          return source;
+      }
+  ```
+
